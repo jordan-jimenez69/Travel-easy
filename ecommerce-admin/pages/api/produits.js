@@ -7,11 +7,6 @@ export default async function handle(req, res) {
 
     await mongooseConnect();
 
-    //récupéré toute les produits
-    /*if (method === 'GET') {
-        res.json(await Produit.find());
-    }*/
-
 
     if (method === 'GET') {
         if (req.query?.id){
