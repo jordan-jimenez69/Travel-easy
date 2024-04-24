@@ -9,8 +9,8 @@ export default async function handle(req, res) {
 
 
     if (method === 'GET') {
-        if (req.query?.id){
-            res.json(await Produit.findOne({_id:req.query.id}));
+        if (req.query?.id) {
+            res.json(await Produit.findOne({ _id: req.query.id }));
         } else {
             res.json(await Produit.find());
         }
@@ -25,4 +25,11 @@ export default async function handle(req, res) {
         })
         res.json(produitAdd);
     }
+    if (method === 'PUT') {
+        const { title,level,price,description,_id } = req.body;
+        await Produit.updateOne({ _id }, { title, level, price, description })
+       
+        res.json(true);
+    }
+
 }
