@@ -1,5 +1,4 @@
 import multiparty from 'multiparty';
-import { resolve } from 'styled-jsx/css';
 
 export default async function handle(req, res) {
     const form = new multiparty.Form();
@@ -10,6 +9,7 @@ export default async function handle(req, res) {
         });
     });
 
+    console.log('length:', files)
     return res.json('OK');
 
 }
