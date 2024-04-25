@@ -8,6 +8,9 @@ export default function EditProduitPage() {
     const [produitInfo, setproduitInfo] = useState(null);
     const router = useRouter();
     const { id } = router.query
+    function goBack() {
+        router.push('/produits')
+    }
     useEffect(() => {
         if (!id) {
             return;
@@ -18,12 +21,14 @@ export default function EditProduitPage() {
     }, [id]);
     return (
         <Layout>
-
             <h1>Modifier Produit</h1>
-            {produitInfo && (
 
+            {produitInfo && (
                 <ProduitForm {...produitInfo} />
             )}
+
+            <button className="btn-return-product"
+                onClick={goBack}>Retour</button>
         </Layout>
     )
 } 

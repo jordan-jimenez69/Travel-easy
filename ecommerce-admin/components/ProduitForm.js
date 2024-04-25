@@ -7,10 +7,12 @@ export default function ProduitForm({
     title: existingtitle,
     description: existingdescription,
     price: existingprice,
-    level: existinglevel
+    level: existinglevel,
+    saison: existingsaison
 }) {
     const [title, setTitle] = useState(existingtitle || '');
     const [level, setLevel] = useState(existinglevel || '');
+    const [saison, setSaison] = useState(existingsaison || '');
     const [price, setPrice] = useState(existingprice || '');
     const [description, setDescription] = useState(existingdescription || '');
     const [goToProduits, setGoToProduits] = useState(false);
@@ -19,7 +21,7 @@ export default function ProduitForm({
     async function saveProduct(ev) {
         ev.preventDefault();
 
-        const data = { title, level, price, description };
+        const data = { title, level, price, description, saison };
 
         if (_id) {
             await axios.put('/api/produits', { ...data, _id });
@@ -35,7 +37,7 @@ export default function ProduitForm({
     return (
         <form onSubmit={saveProduct}>
 
-            <div className="form-group">
+            <div className="form-group-strict">
                 <label>Nom du produit</label>
                 <input
                     type="text"
@@ -58,7 +60,7 @@ export default function ProduitForm({
                 </select>
             </div>
 
-            <div className="form-group">
+            <div className="form-group-strict">
                 <label>Prix</label>
                 <input
                     type="number"
@@ -69,6 +71,19 @@ export default function ProduitForm({
             </div>
 
             <div className="form-group">
+                <label>Saison</label>
+                <select
+                    className="form-select"
+                    value={saison}
+                    onChange={ev => setSaison(ev.target.value)}
+                >
+                    <option value="ete">Eté</option>
+                    <option value="hiver">Hiver</option>
+                    <option value="allSaison">Tout saison</option>
+                </select>
+            </div>
+
+            <div className="form-group-strict">
                 <label>Description</label>
                 <textarea
                     placeholder="Description"

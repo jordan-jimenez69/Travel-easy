@@ -8,6 +8,10 @@ textarea {
     @apply mb-2
 }
 
+.form-group{
+    @apply mt-2 mb-2;
+}
+
 
 input:focus, textarea:focus {
     @apply border-orange-600;
@@ -47,4 +51,8 @@ table.basic a {
 
 .btn-default{
     @apply bg-gray-400 text-white text-sm py-1 px-4 rounded-md inline-flex gap-1;
+}
+
+.btn-return-product{
+    @apply bg-gray-400 text-white text-sm py-1 px-4 rounded-md inline-flex gap-1 mt-3 ;
 }
