@@ -1,12 +1,19 @@
 import Layout from "@/components/layout";
+import { Categorie } from "@/models/categorie";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Categories() {
     const [name, setName] = useState('');
+    const [categories, setCategories] = useState([]);
+    useEffect(() => {
+        axios.get('/api/categories').then(result => {
+            setCategories(result.data);
+        });
+    }, []);
     async function saveCategories(ev) {
         ev.preventDefault();
-        await axios.post('/api/categories', {name});
+        await axios.post('/api/categories', { name });
         setName('');
     }
     return (
@@ -23,6 +30,24 @@ export default function Categories() {
                 />
                 <button type="submit" className="btn-primary py-1">Sauvegarder</button>
             </form>
+
+            <table className="basic mt-4">
+                <thead>
+                    <tr>
+                        <td>Nom de la catégories</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {categories.length > 0 && categories.map
+                    (categorie => (
+
+                        <tr>
+                            <td>{categorie.name}</td>
+                        </tr>
+
+                    ))}
+                </tbody>
+            </table>
         </Layout>
     );
 }
