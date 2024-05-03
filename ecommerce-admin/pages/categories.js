@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 export default function Categories() {
     const [name, setName] = useState('');
+    const [parentCategorie, setParentCategorie] = useState('');
     const [categories, setCategories] = useState([]);
     useEffect(() => {
         fetchCategories();
@@ -15,7 +16,7 @@ export default function Categories() {
     }
     async function saveCategories(ev) {
         ev.preventDefault();
-        await axios.post('/api/categories', { name });
+        await axios.post('/api/categories', { name,  parentCategorie});
         setName('');
         fetchCategories();
     }
@@ -31,14 +32,16 @@ export default function Categories() {
                     onChange={ev => setName(ev.target.value)}
                     value={name}
                 />
-                <select className="mb-0">
-                    <option value="0">catégories sans parents</option>
+                <select className="mb-0"
+                    onChange={ev => setParentCategorie(ev.target.value)}
+                    value={parentCategorie}>
+                    <option value="">catégories sans parents</option>
                     {categories.length > 0 && categories.map
                         (categorie => (
 
-                            <option value={categorie._id}>{categorie.name}</option> 
+                            <option value={categorie._id}>{categorie.name}</option>
 
-                        ))}
+                        ))};
                 </select>
                 <button type="submit" className="btn-primary py-1">Sauvegarder</button>
             </form>
@@ -47,6 +50,7 @@ export default function Categories() {
                 <thead>
                     <tr>
                         <td>Nom de la catégories</td>
+                        <td>parent de la catégorie</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,6 +59,7 @@ export default function Categories() {
 
                             <tr>
                                 <td>{categorie.name}</td>
+                                <td>{categorie?.parent?.name}</td>
                             </tr>
 
                         ))}

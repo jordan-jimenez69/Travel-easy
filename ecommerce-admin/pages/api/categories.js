@@ -10,15 +10,16 @@ export default async function handle(req, res) {
         if (req.query?.id) {
             res.json(await Categorie.findOne({ _id: req.query.id }));
         } else {
-            res.json(await Categorie.find());
+            res.json(await Categorie.find().populate('parent'));
         }
     }
 
     if (method === 'POST') {
-        const { name } = req.body;
+        const { name, parentCategorie } = req.body;
         const categorieAdd = await Categorie.create({
-             name 
+            name, parent:parentCategorie,
         })
         res.json(categorieAdd);
     }
+
 }
