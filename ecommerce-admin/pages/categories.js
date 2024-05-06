@@ -30,6 +30,10 @@ export default function Categories() {
         setName('');
         fetchCategories();
     }
+    async function deleteCategorie(categorieId) {
+        await axios.delete(`/api/categories?id=${categorieId}`);
+        fetchCategories();
+    }
     function editCategorie(categorie) {
         setEditedCategorie(categorie);
         setName(categorie.name);
@@ -85,6 +89,7 @@ export default function Categories() {
                                         className="btn-primary mr-1"
                                     >Modifier</button>
                                     <button
+                                        onClick={() => deleteCategorie(categorie._id)}
                                         className="btn-primary mr-1"
                                     >Supprimer</button>
                                 </td>
