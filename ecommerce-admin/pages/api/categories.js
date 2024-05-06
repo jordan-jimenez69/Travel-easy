@@ -24,10 +24,15 @@ export default async function handle(req, res) {
 
 
     if (method === 'PUT') {
-        const { name, parentCategorie,_id } = req.body;
-        const categorieAdd = await Categorie.updateOne({_id},{
-            name, parent: parentCategorie,
-        })
+        const { name, parentCategorie, _id } = req.body;
+        let updateData = { name };
+        
+        if (parentCategorie) {
+            updateData.parent = parentCategorie;
+        } else {
+            updateData.parent = null; 
+        }
+        const categorieAdd = await Categorie.updateOne({ _id }, updateData);
         res.json(categorieAdd);
     }
 

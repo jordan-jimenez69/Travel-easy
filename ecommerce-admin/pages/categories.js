@@ -17,7 +17,11 @@ export default function Categories() {
     }
     async function saveCategories(ev) {
         ev.preventDefault();
-        const data = { name, parentCategorie };
+        const data = { name };
+
+        if (parentCategorie) {
+            data.parentCategorie = parentCategorie;
+        }
 
         if (editedCategorie) {
             data._id = editedCategorie._id;
@@ -28,6 +32,7 @@ export default function Categories() {
         }
 
         setName('');
+        setParentCategorie('');
         fetchCategories();
     }
     async function deleteCategorie(categorieId) {
@@ -37,7 +42,7 @@ export default function Categories() {
     function editCategorie(categorie) {
         setEditedCategorie(categorie);
         setName(categorie.name);
-        setParentCategorie(categorie.parent?._id);
+        setParentCategorie(categorie.parent ? categorie.parent._id : '');
     }
     return (
         <Layout>
@@ -54,17 +59,17 @@ export default function Categories() {
                     onChange={ev => setName(ev.target.value)}
                     value={name}
                 />
-                <select className="mb-0"
+                <select
+                    className="mb-0"
                     onChange={ev => setParentCategorie(ev.target.value)}
-                    value={parentCategorie}>
-                    <option value="">catégories sans parents</option>
-                    {categories.length > 0 && categories.map
-                        (categorie => (
-
-                            <option value={categorie._id}>{categorie.name}</option>
-
-                        ))};
+                    value={parentCategorie}
+                >
+                    <option value="">Catégories sans parent</option>
+                    {categories.length > 0 && categories.map(categorie => (
+                        <option value={categorie._id}>{categorie.name}</option>
+                    ))}
                 </select>
+
                 <button type="submit" className="btn-primary py-1">Sauvegarder</button>
             </form>
 
