@@ -7,13 +7,9 @@ export default function ProduitForm({
     title: existingtitle,
     description: existingdescription,
     price: existingprice,
-    level: existinglevel,
-    saison: existingsaison,
     images
 }) {
     const [title, setTitle] = useState(existingtitle || '');
-    const [level, setLevel] = useState(existinglevel || '');
-    const [saison, setSaison] = useState(existingsaison || '');
     const [price, setPrice] = useState(existingprice || '');
     const [description, setDescription] = useState(existingdescription || '');
     const [goToProduits, setGoToProduits] = useState(false);
@@ -22,7 +18,7 @@ export default function ProduitForm({
     async function saveProduct(ev) {
         ev.preventDefault();
 
-        const data = { title, level, price, description, saison };
+        const data = { title, price, description, };
 
         if (_id) {
             await axios.put('/api/produits', { ...data, _id });
@@ -85,19 +81,6 @@ export default function ProduitForm({
                 </div>
             </div>
 
-            <div className="form-group">
-                <label>Niveau</label>
-                <select
-                    className="form-select"
-                    value={level}
-                    onChange={ev => setLevel(ev.target.value)}
-                >
-                    <option value="debutant">Débutant</option>
-                    <option value="intermediaire">Intermédiaire</option>
-                    <option value="expert">Expert</option>
-                </select>
-            </div>
-
             <div className="form-group-strict">
                 <label>Prix</label>
                 <input
@@ -106,19 +89,6 @@ export default function ProduitForm({
                     value={price}
                     onChange={ev => setPrice(ev.target.value)}
                 />
-            </div>
-
-            <div className="form-group">
-                <label>Saison</label>
-                <select
-                    className="form-select"
-                    value={saison}
-                    onChange={ev => setSaison(ev.target.value)}
-                >
-                    <option value="ete">Eté</option>
-                    <option value="hiver">Hiver</option>
-                    <option value="allSaison">Tout saison</option>
-                </select>
             </div>
 
             <div className="form-group-strict">
