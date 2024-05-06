@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function Categories() {
+    const [editedCategorie, setEditedCategorie] = useState(null);
     const [name, setName] = useState('');
     const [parentCategorie, setParentCategorie] = useState('');
     const [categories, setCategories] = useState([]);
@@ -16,14 +17,31 @@ export default function Categories() {
     }
     async function saveCategories(ev) {
         ev.preventDefault();
-        await axios.post('/api/categories', { name,  parentCategorie});
+        const data = { name, parentCategorie };
+
+        if (editedCategorie) {
+            data._id = editedCategorie._id;
+            await axios.put('/api/categories', data);
+            setEditedCategorie(null);
+        } else {
+            await axios.post('/api/categories', data);
+        }
+
         setName('');
         fetchCategories();
+    }
+    function editCategorie(categorie) {
+        setEditedCategorie(categorie);
+        setName(categorie.name);
+        setParentCategorie(categorie.parent?._id);
     }
     return (
         <Layout>
             <h1>Catégories</h1>
-            <label>nom de la nouvelle Catégories</label>
+            <label>{editedCategorie
+                ? `Modifier categorie ${editedCategorie.name}`
+                : 'Ajouté une nouvelle catégorie'}
+            </label>
             <form onSubmit={saveCategories} className="flex gap-1">
                 <input
                     className="mb-0"
@@ -51,6 +69,7 @@ export default function Categories() {
                     <tr>
                         <td>Nom de la catégories</td>
                         <td>parent de la catégorie</td>
+                        <td></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,6 +79,15 @@ export default function Categories() {
                             <tr>
                                 <td>{categorie.name}</td>
                                 <td>{categorie?.parent?.name}</td>
+                                <td>
+                                    <button
+                                        onClick={() => editCategorie(categorie)}
+                                        className="btn-primary mr-1"
+                                    >Modifier</button>
+                                    <button
+                                        className="btn-primary mr-1"
+                                    >Supprimer</button>
+                                </td>
                             </tr>
 
                         ))}

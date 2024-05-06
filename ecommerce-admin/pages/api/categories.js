@@ -17,7 +17,16 @@ export default async function handle(req, res) {
     if (method === 'POST') {
         const { name, parentCategorie } = req.body;
         const categorieAdd = await Categorie.create({
-            name, parent:parentCategorie,
+            name, parent: parentCategorie,
+        })
+        res.json(categorieAdd);
+    }
+
+
+    if (method === 'PUT') {
+        const { name, parentCategorie,_id } = req.body;
+        const categorieAdd = await Categorie.updateOne({_id},{
+            name, parent: parentCategorie,
         })
         res.json(categorieAdd);
     }
