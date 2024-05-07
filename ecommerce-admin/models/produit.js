@@ -1,5 +1,4 @@
 import mongoose, { model, Schema, models } from "mongoose";
-import { Categorie } from "./categorie";
 
 const ProduitSchema = new Schema({
     title: { type: String, required: true },

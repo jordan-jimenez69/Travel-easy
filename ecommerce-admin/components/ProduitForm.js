@@ -7,12 +7,13 @@ export default function ProduitForm({
     title: existingtitle,
     description: existingdescription,
     price: existingprice,
+    categorie: assignedcategorie,
     images
 }) {
     const [title, setTitle] = useState(existingtitle || '');
     const [price, setPrice] = useState(existingprice || '');
     const [description, setDescription] = useState(existingdescription || '');
-    const [categorie, setCategorie] = useState([]);
+    const [categorie, setCategorie]  = useState(assignedcategorie || '');
     const [goToProduits, setGoToProduits] = useState(false);
     const [categories, setCategories] = useState([]);
     const router = useRouter();
