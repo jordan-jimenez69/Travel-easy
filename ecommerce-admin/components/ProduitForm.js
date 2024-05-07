@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 
@@ -12,13 +12,20 @@ export default function ProduitForm({
     const [title, setTitle] = useState(existingtitle || '');
     const [price, setPrice] = useState(existingprice || '');
     const [description, setDescription] = useState(existingdescription || '');
+    const [categorie, setCategorie] = useState([]);
     const [goToProduits, setGoToProduits] = useState(false);
+    const [categories, setCategories] = useState([]);
     const router = useRouter();
+    useEffect(() => {
+        axios.get('/api/categories').then(result => {
+            setCategories(result.data);
+        })
+    }, []);
 
     async function saveProduct(ev) {
         ev.preventDefault();
 
-        const data = { title, price, description, };
+        const data = { title, price, description, categorie};
 
         if (_id) {
             await axios.put('/api/produits', { ...data, _id });
@@ -58,6 +65,15 @@ export default function ProduitForm({
                     onChange={ev => setTitle(ev.target.value)}
                 />
             </div>
+
+            <label>Catégorie</label>
+            <select value={categorie}
+                onChange={ev => setCategorie(ev.target.value)}>
+                <option value=''>Ucategorized</option>
+                {categories.length > 0 && categories.map(c => (
+                    <option value={c._id}>{c.name}</option>
+                ))}
+            </select>
 
             <div className="form-group-strict">
                 <label>Photo</label>
@@ -104,6 +120,6 @@ export default function ProduitForm({
                 Sauvegarder
             </button>
 
-        </form>
+        </form >
     );
 }
