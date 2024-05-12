@@ -39,7 +39,7 @@ export default async function handle(req, res) {
     }
 
     if (method === 'DELETE') {
-        if (req.query?.id) {
+        if (req.query.id) { 
             await Categorie.deleteOne({ _id: req.query.id });
             res.json(true);
         }

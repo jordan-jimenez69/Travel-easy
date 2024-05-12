@@ -46,15 +46,16 @@ export default function Categories() {
         await axios.delete(`/api/categories?id=${categorieId}`);
         fetchCategories();
     }
+
     function editCategorie(categorie) {
         setEditedCategorie(categorie);
         setName(categorie.name);
         setParentCategorie(categorie.parent ? categorie.parent._id : '');
-        setProprietes(categorie.proprietes.map(({ name, values }) =>({
+        setProprietes(categorie.proprietes.map(({ name, values }) => ({
             name,
             values: values.join(',')
         }))
-    );
+        );
     }
     function addProprietes() {
         setProprietes(prev => {
@@ -154,38 +155,37 @@ export default function Categories() {
                 </div>
 
             </form>
-            {!editedCategorie && (
-                <table className="basic mt-4">
-                    <thead>
-                        <tr>
-                            <td>Nom de la catégories</td>
-                            <td>parent de la catégorie</td>
-                            <td></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {categories.length > 0 && categories.map
-                            (categorie => (
+            <table className="basic mt-4">
+                <thead>
+                    <tr>
+                        <td>Nom de la catégories</td>
+                        <td>parent de la catégorie</td>
+                        <td></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {categories.length > 0 && categories.map
+                        (categorie => (
 
-                                <tr>
-                                    <td>{categorie.name}</td>
-                                    <td>{categorie?.parent?.name}</td>
-                                    <td>
-                                        <button
-                                            onClick={() => editCategorie(categorie)}
-                                            className="btn-primary mr-1"
-                                        >Modifier</button>
-                                        <button
-                                            onClick={() => deleteCategorie(categorie)}
-                                            className="btn-primary mr-1"
-                                        >Supprimer</button>
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>{categorie.name}</td>
+                                <td>{categorie?.parent?.name}</td>
+                                <td>
+                                    <button
+                                        onClick={() => editCategorie(categorie)}
+                                        className="btn-primary mr-1"
+                                    >Modifier</button>
+                                    <button
+                                        onClick={() => deleteCategorie(categorie._id)} 
+                                        className="btn-primary mr-1"
+                                    >Supprimer</button>
+                                </td>
+                            </tr>
 
-                            ))}
-                    </tbody>
-                </table>
-            )}
+                        ))}
+                </tbody>
+            </table>
+
 
         </Layout>
     );
