@@ -67,7 +67,7 @@ export default function Categories() {
     }
     function removePropriete(indexToRemove) {
         setProprietes(prev => {
-            return [...prev].filter((p,pIndex) => {
+            return [...prev].filter((p, pIndex) => {
                 return pIndex !== indexToRemove;
             });
             return newProprietes;
@@ -129,39 +129,54 @@ export default function Categories() {
                         ))}
                 </div>
 
-                <button type="submit" className="btn-primary py-1">Sauvegarder</button>
+                <div className="flex gap-1">
+                    {editedCategorie && (
+                        <button 
+                        onClick={() => {
+                            setEditedCategorie(null);
+                            setName('');
+                            setParentCategorie('');
+                        }}
+                        type="button" 
+                        className="btn-default py-1">Retour</button>
+                    )}
+                    <button type="submit" className="btn-primary py-1">Sauvegarder</button>
+                </div>
+
             </form>
+            {!editedCategorie && (
+                <table className="basic mt-4">
+                    <thead>
+                        <tr>
+                            <td>Nom de la catégories</td>
+                            <td>parent de la catégorie</td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {categories.length > 0 && categories.map
+                            (categorie => (
 
-            <table className="basic mt-4">
-                <thead>
-                    <tr>
-                        <td>Nom de la catégories</td>
-                        <td>parent de la catégorie</td>
-                        <td></td>
-                    </tr>
-                </thead>
-                <tbody>
-                    {categories.length > 0 && categories.map
-                        (categorie => (
+                                <tr>
+                                    <td>{categorie.name}</td>
+                                    <td>{categorie?.parent?.name}</td>
+                                    <td>
+                                        <button
+                                            onClick={() => editCategorie(categorie)}
+                                            className="btn-primary mr-1"
+                                        >Modifier</button>
+                                        <button
+                                            onClick={() => deleteCategorie(categorie)}
+                                            className="btn-primary mr-1"
+                                        >Supprimer</button>
+                                    </td>
+                                </tr>
 
-                            <tr>
-                                <td>{categorie.name}</td>
-                                <td>{categorie?.parent?.name}</td>
-                                <td>
-                                    <button
-                                        onClick={() => editCategorie(categorie)}
-                                        className="btn-primary mr-1"
-                                    >Modifier</button>
-                                    <button
-                                        onClick={() => deleteCategorie(categorie._id)}
-                                        className="btn-primary mr-1"
-                                    >Supprimer</button>
-                                </td>
-                            </tr>
+                            ))}
+                    </tbody>
+                </table>
+            )}
 
-                        ))}
-                </tbody>
-            </table>
         </Layout>
     );
 }
