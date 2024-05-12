@@ -8,12 +8,14 @@ export default function ProduitForm({
     description: existingdescription,
     price: existingprice,
     categorie: assignedcategorie,
-    images
+    images,
+    proprietes: assignedProprietes,
 }) {
     const [title, setTitle] = useState(existingtitle || '');
     const [price, setPrice] = useState(existingprice || '');
     const [description, setDescription] = useState(existingdescription || '');
-    const [categorie, setCategorie]  = useState(assignedcategorie || '');
+    const [categorie, setCategorie] = useState(assignedcategorie || '');
+    const [productProprietes, setProductProprietes] = useState(assignedProprietes || {});
     const [goToProduits, setGoToProduits] = useState(false);
     const [categories, setCategories] = useState([]);
     const router = useRouter();
@@ -26,7 +28,10 @@ export default function ProduitForm({
     async function saveProduct(ev) {
         ev.preventDefault();
 
-        const data = { title, price, description, categorie};
+        const data = {
+            title, price, description, categorie,
+            proprietes: productProprietes
+        };
 
         if (_id) {
             await axios.put('/api/produits', { ...data, _id });
@@ -54,6 +59,26 @@ export default function ProduitForm({
         }
     }
 
+    function setProductProp(propName, value) {
+        setProductProprietes(prev => {
+            const newProductProps = { ...prev };
+            newProductProps[propName] = value;
+            return newProductProps
+        })
+    }
+
+    const proprietesToFill = [];
+    if (categories.length > 0 && categorie) {
+        let catInfo = categories.find(({ _id }) => _id === categorie);
+        proprietesToFill.push(...catInfo.proprietes);
+        while (catInfo?.parent?._id) {
+            const parentCat = categories.find(({ _id }) => _id ===
+                catInfo?.parent?._id);
+            proprietesToFill.push(parentCat.proprietes);
+            catInfo = parentCat;
+        }
+    }
+
     return (
         <form onSubmit={saveProduct}>
 
@@ -75,6 +100,21 @@ export default function ProduitForm({
                     <option value={c._id}>{c.name}</option>
                 ))}
             </select>
+
+
+            {proprietesToFill.length > 0 && proprietesToFill.map(p => (
+                <div className="flex gap-1">
+                    {p.name}
+                    <select
+                        value={productProprietes[p.name]}
+                        onChange={ev => setProductProp(p.name, ev.target.value)}>
+
+                        {p.values.map(v => (
+                            <option value={v}>{v}</option>
+                        ))}
+                    </select>
+                </div>
+            ))}
 
             <div className="form-group-strict">
                 <label>Photo</label>

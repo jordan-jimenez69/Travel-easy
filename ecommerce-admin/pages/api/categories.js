@@ -28,18 +28,18 @@ export default async function handle(req, res) {
     if (method === 'PUT') {
         const { name, parentCategorie, proprietes, _id } = req.body;
         let updateData = { name, proprietes };
-        
+
         if (parentCategorie) {
             updateData.parent = parentCategorie;
         } else {
-            updateData.parent = null; 
+            updateData.parent = null;
         }
         const categorieAdd = await Categorie.updateOne({ _id }, updateData);
         res.json(categorieAdd);
     }
 
     if (method === 'DELETE') {
-        if (req.query.id) { 
+        if (req.query.id) {
             await Categorie.deleteOne({ _id: req.query.id });
             res.json(true);
         }

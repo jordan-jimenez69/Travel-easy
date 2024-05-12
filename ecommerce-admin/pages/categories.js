@@ -147,6 +147,7 @@ export default function Categories() {
                                 setEditedCategorie(null);
                                 setName('');
                                 setParentCategorie('');
+                                setProprietes([]);
                             }}
                             type="button"
                             className="btn-default py-1">Retour</button>
