@@ -15,17 +15,19 @@ export default async function handle(req, res) {
     }
 
     if (method === 'POST') {
-        const { name, parentCategorie } = req.body;
+        const { name, parentCategorie, proprietes } = req.body;
         const categorieAdd = await Categorie.create({
-            name, parent: parentCategorie,
+            name,
+            parent: parentCategorie,
+            proprietes,
         })
         res.json(categorieAdd);
     }
 
 
     if (method === 'PUT') {
-        const { name, parentCategorie, _id } = req.body;
-        let updateData = { name };
+        const { name, parentCategorie, proprietes, _id } = req.body;
+        let updateData = { name, proprietes };
         
         if (parentCategorie) {
             updateData.parent = parentCategorie;
@@ -38,9 +40,7 @@ export default async function handle(req, res) {
 
     if (method === 'DELETE') {
         if (req.query?.id) {
-
-            await Categorie.deleteOne({ _id: req.query?.id });
-
+            await Categorie.deleteOne({ _id: req.query.id });
             res.json(true);
         }
     }

@@ -19,7 +19,11 @@ export default function Categories() {
     }
     async function saveCategories(ev) {
         ev.preventDefault();
-        const data = { name };
+        const data = {
+            name, proprietes: proprietes.map(p => ({
+                name: p.name, values: p.values.split(','),
+            }))
+        };
 
         if (parentCategorie) {
             data.parentCategorie = parentCategorie;
@@ -35,6 +39,7 @@ export default function Categories() {
 
         setName('');
         setParentCategorie('');
+        setProprietes([]);
         fetchCategories();
     }
     async function deleteCategorie(categorieId) {
@@ -45,6 +50,11 @@ export default function Categories() {
         setEditedCategorie(categorie);
         setName(categorie.name);
         setParentCategorie(categorie.parent ? categorie.parent._id : '');
+        setProprietes(categorie.proprietes.map(({ name, values }) =>({
+            name,
+            values: values.join(',')
+        }))
+    );
     }
     function addProprietes() {
         setProprietes(prev => {
@@ -131,14 +141,14 @@ export default function Categories() {
 
                 <div className="flex gap-1">
                     {editedCategorie && (
-                        <button 
-                        onClick={() => {
-                            setEditedCategorie(null);
-                            setName('');
-                            setParentCategorie('');
-                        }}
-                        type="button" 
-                        className="btn-default py-1">Retour</button>
+                        <button
+                            onClick={() => {
+                                setEditedCategorie(null);
+                                setName('');
+                                setParentCategorie('');
+                            }}
+                            type="button"
+                            className="btn-default py-1">Retour</button>
                     )}
                     <button type="submit" className="btn-primary py-1">Sauvegarder</button>
                 </div>
