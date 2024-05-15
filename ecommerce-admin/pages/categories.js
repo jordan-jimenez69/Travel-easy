@@ -43,8 +43,10 @@ export default function Categories() {
         fetchCategories();
     }
     async function deleteCategorie(categorieId) {
+        if (window.confirm('Vous voulez vraiment supprimer la catégorie ?')) {
         await axios.delete(`/api/categories?id=${categorieId}`);
         fetchCategories();
+        }
     }
 
     function editCategorie(categorie) {
@@ -77,12 +79,14 @@ export default function Categories() {
         });
     }
     function removePropriete(indexToRemove) {
-        setProprietes(prev => {
-            return [...prev].filter((p, pIndex) => {
-                return pIndex !== indexToRemove;
-            });
-            return newProprietes;
-        });
+        if (window.confirm('Vous voulez vraiment supprimer la catégorie ?')) {
+            setProprietes(prev => {
+                return [...prev].filter((p, pIndex) => {
+                    return pIndex !== indexToRemove;
+                });
+                return newProprietes;
+            }); 
+        }
     }
 
     return (
