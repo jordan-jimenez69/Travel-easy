@@ -3,7 +3,11 @@
 @tailwind utilities;
 
 input,
+<<<<<<< HEAD
 textarea {
+=======
+textarea, select {
+>>>>>>> jordan
     @apply border-2 border-gray-500 rounded-md px-2 w-full;
     @apply mb-2
 }
@@ -13,7 +17,11 @@ textarea {
 }
 
 
+<<<<<<< HEAD
 input:focus, textarea:focus {
+=======
+input:focus, textarea:focus, select:focus {
+>>>>>>> jordan
     @apply border-orange-600;
 }
 

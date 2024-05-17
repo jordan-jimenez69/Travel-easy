@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { useState } from "react";
+=======
+import { useEffect, useState } from "react";
+>>>>>>> jordan
 import axios from "axios";
 import { useRouter } from "next/router";
 
@@ -7,6 +11,7 @@ export default function ProduitForm({
     title: existingtitle,
     description: existingdescription,
     price: existingprice,
+<<<<<<< HEAD
     level: existinglevel,
     saison: existingsaison,
     images
@@ -18,11 +23,37 @@ export default function ProduitForm({
     const [description, setDescription] = useState(existingdescription || '');
     const [goToProduits, setGoToProduits] = useState(false);
     const router = useRouter();
+=======
+    categorie: assignedcategorie,
+    images,
+    proprietes: assignedProprietes,
+}) {
+    const [title, setTitle] = useState(existingtitle || '');
+    const [price, setPrice] = useState(existingprice || '');
+    const [description, setDescription] = useState(existingdescription || '');
+    const [categorie, setCategorie] = useState(assignedcategorie || '');
+    const [productProprietes, setProductProprietes] = useState(assignedProprietes || {});
+    const [goToProduits, setGoToProduits] = useState(false);
+    const [categories, setCategories] = useState([]);
+    const router = useRouter();
+    useEffect(() => {
+        axios.get('/api/categories').then(result => {
+            setCategories(result.data);
+        })
+    }, []);
+>>>>>>> jordan
 
     async function saveProduct(ev) {
         ev.preventDefault();
 
+<<<<<<< HEAD
         const data = { title, level, price, description, saison };
+=======
+        const data = {
+            title, price, description, categorie,
+            proprietes: productProprietes
+        };
+>>>>>>> jordan
 
         if (_id) {
             await axios.put('/api/produits', { ...data, _id });
@@ -50,6 +81,29 @@ export default function ProduitForm({
         }
     }
 
+<<<<<<< HEAD
+=======
+    function setProductProp(propName, value) {
+        setProductProprietes(prev => {
+            const newProductProps = { ...prev };
+            newProductProps[propName] = value;
+            return newProductProps
+        })
+    }
+
+    const proprietesToFill = [];
+    if (categories.length > 0 && categorie) {
+        let catInfo = categories.find(({ _id }) => _id === categorie);
+        proprietesToFill.push(...catInfo.proprietes);
+        while (catInfo?.parent?._id) {
+            const parentCat = categories.find(({ _id }) => _id ===
+                catInfo?.parent?._id);
+            proprietesToFill.push(parentCat.proprietes);
+            catInfo = parentCat;
+        }
+    }
+
+>>>>>>> jordan
     return (
         <form onSubmit={saveProduct}>
 
@@ -63,6 +117,36 @@ export default function ProduitForm({
                 />
             </div>
 
+<<<<<<< HEAD
+=======
+            <label className="flex gap-1 mb-1">Catégorie</label>
+            <select value={categorie}
+                onChange={ev => setCategorie(ev.target.value)}>
+                <option value=''>Ucategorized</option>
+                {categories.length > 0 && categories.map(c => (
+                    <option value={c._id}>{c.name}</option>
+                ))}
+            </select>
+
+            <label
+            className="flex gap-1 mb-1"
+            >Propriété</label>
+            {proprietesToFill.length > 0 && proprietesToFill.map(p => (
+                
+                <div className="flex gap-1">
+                    {p.name}
+                    <select
+                        value={productProprietes[p.name]}
+                        onChange={ev => setProductProp(p.name, ev.target.value)}>
+
+                        {p.values.map(v => (
+                            <option value={v}>{v}</option>
+                        ))}
+                    </select>
+                </div>
+            ))}
+
+>>>>>>> jordan
             <div className="form-group-strict">
                 <label>Photo</label>
                 <div className="mt-2">
@@ -85,6 +169,7 @@ export default function ProduitForm({
                 </div>
             </div>
 
+<<<<<<< HEAD
             <div className="form-group">
                 <label>Niveau</label>
                 <select
@@ -98,6 +183,8 @@ export default function ProduitForm({
                 </select>
             </div>
 
+=======
+>>>>>>> jordan
             <div className="form-group-strict">
                 <label>Prix</label>
                 <input
@@ -108,6 +195,7 @@ export default function ProduitForm({
                 />
             </div>
 
+<<<<<<< HEAD
             <div className="form-group">
                 <label>Saison</label>
                 <select
@@ -121,6 +209,8 @@ export default function ProduitForm({
                 </select>
             </div>
 
+=======
+>>>>>>> jordan
             <div className="form-group-strict">
                 <label>Description</label>
                 <textarea
@@ -134,6 +224,10 @@ export default function ProduitForm({
                 Sauvegarder
             </button>
 
+<<<<<<< HEAD
         </form>
+=======
+        </form >
+>>>>>>> jordan
     );
 }
