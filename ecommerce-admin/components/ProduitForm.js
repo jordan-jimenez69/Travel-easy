@@ -28,6 +28,11 @@ export default function ProduitForm({
     async function saveProduct(ev) {
         ev.preventDefault();
 
+        if (!categorie) {
+            alert("Selectionner une categorie !")
+            return;
+        }
+
         const data = {
             title, price, description, categorie,
             proprietes: productProprietes

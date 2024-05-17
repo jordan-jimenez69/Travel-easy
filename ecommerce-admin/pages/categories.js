@@ -1,10 +1,4 @@
 import Layout from "@/components/layout";
-<<<<<<< HEAD
-
-export default function Produits() {
-    return(
-        <Layout>Page Catégories</Layout>
-=======
 import axios from "axios";
 import { useEffect, useState } from "react";
 
@@ -199,6 +193,5 @@ export default function Categories() {
 
 
         </Layout>
->>>>>>> jordan
     );
 }
