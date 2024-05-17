@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { useState } from "react";
-=======
 import { useEffect, useState } from "react";
->>>>>>> jordan
 import axios from "axios";
 import { useRouter } from "next/router";
 
@@ -11,19 +7,6 @@ export default function ProduitForm({
     title: existingtitle,
     description: existingdescription,
     price: existingprice,
-<<<<<<< HEAD
-    level: existinglevel,
-    saison: existingsaison,
-    images
-}) {
-    const [title, setTitle] = useState(existingtitle || '');
-    const [level, setLevel] = useState(existinglevel || '');
-    const [saison, setSaison] = useState(existingsaison || '');
-    const [price, setPrice] = useState(existingprice || '');
-    const [description, setDescription] = useState(existingdescription || '');
-    const [goToProduits, setGoToProduits] = useState(false);
-    const router = useRouter();
-=======
     categorie: assignedcategorie,
     images,
     proprietes: assignedProprietes,
@@ -41,19 +24,14 @@ export default function ProduitForm({
             setCategories(result.data);
         })
     }, []);
->>>>>>> jordan
 
     async function saveProduct(ev) {
         ev.preventDefault();
 
-<<<<<<< HEAD
-        const data = { title, level, price, description, saison };
-=======
         const data = {
             title, price, description, categorie,
             proprietes: productProprietes
         };
->>>>>>> jordan
 
         if (_id) {
             await axios.put('/api/produits', { ...data, _id });
@@ -81,8 +59,6 @@ export default function ProduitForm({
         }
     }
 
-<<<<<<< HEAD
-=======
     function setProductProp(propName, value) {
         setProductProprietes(prev => {
             const newProductProps = { ...prev };
@@ -103,7 +79,6 @@ export default function ProduitForm({
         }
     }
 
->>>>>>> jordan
     return (
         <form onSubmit={saveProduct}>
 
@@ -117,8 +92,6 @@ export default function ProduitForm({
                 />
             </div>
 
-<<<<<<< HEAD
-=======
             <label className="flex gap-1 mb-1">Catégorie</label>
             <select value={categorie}
                 onChange={ev => setCategorie(ev.target.value)}>
@@ -146,7 +119,6 @@ export default function ProduitForm({
                 </div>
             ))}
 
->>>>>>> jordan
             <div className="form-group-strict">
                 <label>Photo</label>
                 <div className="mt-2">
@@ -169,22 +141,6 @@ export default function ProduitForm({
                 </div>
             </div>
 
-<<<<<<< HEAD
-            <div className="form-group">
-                <label>Niveau</label>
-                <select
-                    className="form-select"
-                    value={level}
-                    onChange={ev => setLevel(ev.target.value)}
-                >
-                    <option value="debutant">Débutant</option>
-                    <option value="intermediaire">Intermédiaire</option>
-                    <option value="expert">Expert</option>
-                </select>
-            </div>
-
-=======
->>>>>>> jordan
             <div className="form-group-strict">
                 <label>Prix</label>
                 <input
@@ -195,22 +151,6 @@ export default function ProduitForm({
                 />
             </div>
 
-<<<<<<< HEAD
-            <div className="form-group">
-                <label>Saison</label>
-                <select
-                    className="form-select"
-                    value={saison}
-                    onChange={ev => setSaison(ev.target.value)}
-                >
-                    <option value="ete">Eté</option>
-                    <option value="hiver">Hiver</option>
-                    <option value="allSaison">Tout saison</option>
-                </select>
-            </div>
-
-=======
->>>>>>> jordan
             <div className="form-group-strict">
                 <label>Description</label>
                 <textarea
@@ -224,10 +164,6 @@ export default function ProduitForm({
                 Sauvegarder
             </button>
 
-<<<<<<< HEAD
-        </form>
-=======
         </form >
->>>>>>> jordan
     );
 }

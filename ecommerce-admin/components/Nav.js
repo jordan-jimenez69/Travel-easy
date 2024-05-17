@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 import { signOut } from "next-auth/react";
->>>>>>> jordan
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -55,8 +52,6 @@ return (
 </svg>
                 Parametres
             </Link>
-<<<<<<< HEAD
-=======
 
             <button onClick={() => signOut()} className={inactiveLink}>
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi bi-box-arrow-left" viewBox="0 0 16 16">
@@ -65,7 +60,6 @@ return (
 </svg>
                 Déconnexion
             </button>
->>>>>>> jordan
         </nav>
     </aside>
 );
