@@ -92,7 +92,7 @@ export default function ProduitForm({
                 />
             </div>
 
-            <label>Catégorie</label>
+            <label className="flex gap-1 mb-1">Catégorie</label>
             <select value={categorie}
                 onChange={ev => setCategorie(ev.target.value)}>
                 <option value=''>Ucategorized</option>
@@ -101,8 +101,11 @@ export default function ProduitForm({
                 ))}
             </select>
 
-
+            <label
+            className="flex gap-1 mb-1"
+            >Propriété</label>
             {proprietesToFill.length > 0 && proprietesToFill.map(p => (
+                
                 <div className="flex gap-1">
                     {p.name}
                     <select
