@@ -11,11 +11,10 @@
 }
 
 .titre-overlay {
-    color: rgb(0, 0, 0);
+    color: rgba(0, 0, 0, 0.800);
     font-size: 3em;
     text-align: center;
-    margin-bottom: 5%;
-
+    margin-bottom: 7%;
 }
 
 .btn-home-contener {
@@ -23,7 +22,7 @@
     justify-content: center;
     align-items: center;
     margin-bottom: 17%;
-  }
+}
 
 .btn-home {
     width: 20%;
@@ -38,18 +37,19 @@
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 12px;
-    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s; 
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
-  }
-  
-  .btn-home:hover {
-    background-color: rgba(0, 0, 0, 0.500);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px); 
-  }
-  
-  .btn-home:active {
-    background-color: rgba(0, 0, 0, 0.500);
+    transition: background-color 0.3s, box-shadow 0.3s, transform 0.3s;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transform: translateY(2px); 
-  }
+}
+
+.btn-home:hover {
+    background-color: rgba(0, 0, 0, 0.500);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
+    color: rgb(212, 135, 34);
+}
+
+.btn-home:active {
+    background-color: rgba(0, 0, 0, 0.500);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    transform: translateY(2px);
+}
