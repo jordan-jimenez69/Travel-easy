@@ -1,0 +1,23 @@
+.titre-equipement {
+    font-size: 200%;
+    margin-top: 2%;
+    margin-bottom: 1%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.trait {
+    content: "";
+    display: block;
+    align-items: center;
+    width: 30%;
+    margin-left: 35%;
+    height: 4px;
+    margin-bottom: 4%;
+    background-color: rgb(212, 135, 34);
+}
+
+.img-chaussure {
+    width: 20%;
+}

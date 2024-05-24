@@ -3,7 +3,7 @@
     height: 60px;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
     background-color: rgba(0, 0, 0, 0.800);
     color: white;
 }
@@ -13,7 +13,6 @@
 }
 
 .liste-navbar ul {
-    margin-left: 60%;
     list-style-type: none;
 }
 
