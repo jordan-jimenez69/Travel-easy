@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 export default function Equipement() {
@@ -8,12 +9,24 @@ export default function Equipement() {
             </div>
 
             <div class="trait"></div>
-            
+
             <section className="list-equipement">
-                <div className="list-equipement-chaussure">
-                    <img className="img-chaussure" src="img-accueil.jpg" />
-                    <h3>Acheter maintenant</h3>
+
+                <div className="equipement">
+                    <img className="img-list-equip" src="chaussure.jpg" />
+                    <Link className="btn-equipement" href={""}>Acheter maintenant</Link>
                 </div>
+
+                <div className="equipement">
+                    <img className="img-list-equip" src="sac.jpg" />
+                    <Link className="btn-equipement" href={""}>Acheter maintenant</Link>
+                </div>
+
+                <div className="equipement">
+                    <img className="img-list-equip" src="tente.jpg" />
+                    <Link className="btn-equipement" href={""}>Acheter maintenant</Link>
+                </div>
+
             </section>
         </>
     );
