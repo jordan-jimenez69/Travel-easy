@@ -1,5 +1,5 @@
 .titre-and-equipement {
-    height: 70vh;
+    height: 100vh;
     background-color: rgba(0, 0, 0, 0.800);
 }
 
@@ -7,6 +7,7 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
+    margin-bottom: 2%;
 }
 
 .equipement {
@@ -14,6 +15,7 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    width: 22%; /* Ajustez la largeur selon vos besoins */
 }
 
 .titre-equipement {
@@ -38,7 +40,8 @@
 }
 
 .img-list-equip {
-    width: 65%;
+    width: 100%;
+    height: auto;
 }
 
 .btn-equipement {
@@ -73,25 +76,35 @@
 }
 
 .voir-plus {
-    margin-top: 3%;
-    color: white;
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 22%;
+}
+
+.text-equip-plus {
+   font-size: 56px;
+   margin-bottom: 10%;
+    color: white;
 }
 
 .text-voirplus {
     display: flex;
     align-items: center;
+    justify-content: center;
     text-decoration: none;
     color: inherit;
+    width: 100%;
+    padding: 15px 32px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 12px;
 }
 
 .fleche-voirplus {
     display: flex;
     justify-content: center;
     margin-left: 10px;
-    transition: transform 0.3s ease, fill 0.3s ease;
+    transition: transform 0.3s ease, fill 0.3s ease; 
 }
 
 .text-voirplus:hover .fleche-voirplus {
@@ -100,4 +113,8 @@
 
 .text-voirplus:hover .bi-arrow-right {
     fill: rgb(212, 135, 34);
+}
+
+span {
+    color: rgb(212, 135, 34);
 }
