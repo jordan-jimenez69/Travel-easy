@@ -1,3 +1,8 @@
+.titre-and-equipement {
+    height: 70vh;
+    background-color: rgba(0, 0, 0, 0.800);
+}
+
 .list-equipement {
     display: flex;
     justify-content: space-around;
@@ -12,9 +17,10 @@
 }
 
 .titre-equipement {
+    color: rgba(255, 255, 255, 0.8);
     font-size: 200%;
-    margin-top: 2%;
     margin-bottom: 1%;
+    padding-top: 2%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -37,9 +43,9 @@
 
 .btn-equipement {
     width: 50%;
-    background-color: rgba(0, 0, 0, 0.600);
+    background-color: rgb(255, 255, 255);
     border: none;
-    color: rgba(212, 135, 34, 0.9);
+    color: rgba(212, 135, 34, 0.8);
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -55,8 +61,7 @@
 }
 
 .btn-equipement:hover {
-    background-color: rgba(0, 0, 0, 0.700);
-    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 8px 12px rgba(255, 255, 255, 0.5);
     transform: translateY(-2px);
     color: rgb(212, 135, 34);
 }
@@ -65,4 +70,34 @@
     background-color: rgba(0, 0, 0, 0.500);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
     transform: translateY(2px);
+}
+
+.voir-plus {
+    margin-top: 3%;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text-voirplus {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+.fleche-voirplus {
+    display: flex;
+    justify-content: center;
+    margin-left: 10px;
+    transition: transform 0.3s ease, fill 0.3s ease;
+}
+
+.text-voirplus:hover .fleche-voirplus {
+    transform: translateX(5px);
+}
+
+.text-voirplus:hover .bi-arrow-right {
+    fill: rgb(212, 135, 34);
 }
