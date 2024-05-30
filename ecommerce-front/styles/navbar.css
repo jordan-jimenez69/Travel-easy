@@ -3,19 +3,16 @@
     height: 60px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    background-color: black;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.800);
     color: white;
 }
 
 .logo-navbar {
-    margin-top: 30px;
     margin-left: 20px;
 }
 
 .liste-navbar ul {
-    margin-top: 20px;
-    margin-left: 60%;
     list-style-type: none;
 }
 
