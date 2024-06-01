@@ -4,6 +4,7 @@
   }
   
   .CategoriesGrid > div {
+    margin-top: 3%;
     padding: 10px;
     border: 1px solid #ddd;
     background-color: #f9f9f9;
