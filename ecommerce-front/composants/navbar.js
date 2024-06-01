@@ -8,10 +8,11 @@ export default function Navbar () {
         </div>     
         <div className='liste-navbar'>
             <ul>
-                <Link className="li-navbar" href={""}>Accueil</Link>
-                <Link className="li-navbar" href={""}>Boutique</Link>
+                <Link className="li-navbar" href={"./"}>Accueil</Link>
+                <Link className="li-navbar" href={"./boutique"}>Boutique</Link>
                 <Link className="li-navbar" href={""}>Randonnées</Link>
-                <Link className="li-navbar" href={""}>Contact</Link>
+                <Link className="li-navbar" href={""}>Panier</Link>
+                <Link className="li-navbar" href={""}>Compte</Link>
             </ul>
         </div>
     </nav>

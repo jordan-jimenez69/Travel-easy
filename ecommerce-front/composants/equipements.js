@@ -43,7 +43,7 @@ export default function Equipement() {
 
                     <div className="equipement voir-plus">
                         <h1 className="text-equip-plus">Accédez à notre <span>catalogue</span> complet ici !</h1>
-                        <Link className="text-voirplus" href={""}>
+                        <Link className="text-voirplus" href={"../boutique"}>
                             Découvrez tout les équipements
                             <div className="fleche-voirplus">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">

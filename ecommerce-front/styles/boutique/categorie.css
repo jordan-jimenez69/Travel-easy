@@ -1,0 +1,4 @@
+.CategoriesGrid {
+    display: grid;
+    grid-template-columns: auto;
+}

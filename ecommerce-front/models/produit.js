@@ -9,5 +9,4 @@ const ProduitSchema = new Schema({
 }, {
     timestamps: true,
 });
-
 export const Produit = models.Produit || model('Produit', ProduitSchema);
