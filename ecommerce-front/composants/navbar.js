@@ -1,20 +1,30 @@
 import Link from "next/link";
 
-export default function Navbar () {
+export default function Navbar() {
     return (
-        <nav className="navbar">
+      <nav className="navbar">
         <div className="logo-navbar">
-            <h2>TravelEasy</h2>
+          <h2>TravelEasy</h2>
         </div>     
         <div className='liste-navbar'>
-            <ul>
-                <Link className="li-navbar" href={"./"}>Accueil</Link>
-                <Link className="li-navbar" href={"./boutique"}>Boutique</Link>
-                <Link className="li-navbar" href={""}>Randonnées</Link>
-                <Link className="li-navbar" href={""}>Panier</Link>
-                <Link className="li-navbar" href={""}>Compte</Link>
-            </ul>
+          <ul>
+            <li className="li-navbar">
+              <Link href="/">Accueil</Link>
+            </li>
+            <li className="li-navbar">
+              <Link href="/boutique">Boutique</Link>
+            </li>
+            <li className="li-navbar">
+              <Link href="/randonnees">Randonnées</Link>
+            </li>
+            <li className="li-navbar">
+              <Link href="/panier">Panier</Link>
+            </li>
+            <li className="li-navbar">
+              <Link href="/compte">Compte</Link>
+            </li>
+          </ul>
         </div>
-    </nav>
+      </nav>
     );
-}
+  }
