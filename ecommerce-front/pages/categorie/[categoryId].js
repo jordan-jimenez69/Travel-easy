@@ -11,7 +11,7 @@ const CategoryProducts = ({ products, categoryName }) => {
         <Navbar />
       </div>
 
-      <h1>Produits pour la catégorie: {categoryName}</h1>
+      <h1 className='Title-Prduct'>Produits pour la catégorie: {categoryName}</h1>
       <div className="ProductsGrid">
         {products.map(product => (
           <div key={product._id} className="product-card">
