@@ -1,5 +1,4 @@
 .titre-and-equipement {
-    height: 100vh;
     background-color: rgba(0, 0, 0, 0.800);
 }
 
@@ -7,7 +6,6 @@
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin-bottom: 2%;
 }
 
 .equipement {
@@ -16,6 +14,7 @@
     align-items: center;
     flex-direction: column;
     width: 22%; /* Ajustez la largeur selon vos besoins */
+    margin-bottom: 1%;
 }
 
 .titre-equipement {
