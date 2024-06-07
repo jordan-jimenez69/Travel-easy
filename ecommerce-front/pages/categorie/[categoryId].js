@@ -1,27 +1,66 @@
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { mongooseConnect } from '@/lib/mongoose';
 import { Produit } from '@/models/produit';
 import { Categorie } from '@/models/categorie';
 import Navbar from '@/composants/navbar';
-import { useRouter } from 'next/router';
 
-const CategoryProducts = ({ products, categoryName, categoryId }) => {
+const CategoryProducts = ({ initialProducts, categoryName, categoryId, properties }) => {
   const router = useRouter();
+  const [selectedFilters, setSelectedFilters] = useState({});
+  const [filteredProducts, setFilteredProducts] = useState(initialProducts);
 
   const handleProductClick = (categoryId, productId) => {
     router.push(`/categorie/produit/${productId}`);
   };
 
+  const handleFilterChange = (property, value) => {
+    setSelectedFilters(prevFilters => {
+      const newFilters = { ...prevFilters };
+      newFilters[property] = value;
+      return newFilters;
+    });
+  };
+
+  useEffect(() => {
+    const applyFilters = () => {
+      let filtered = initialProducts;
+      for (const property in selectedFilters) {
+        if (selectedFilters[property] !== 'Tous') {
+          filtered = filtered.filter(product => product.proprietes[property] === selectedFilters[property]);
+        }
+      }
+      setFilteredProducts(filtered);
+    };
+
+    applyFilters();
+  }, [selectedFilters, initialProducts]);
+
   return (
     <div>
-      <div>
-        <Navbar />
-      </div>
+      <Navbar />
+      <div className="Filters">
       <h1 className='Title-Product'>Produits pour la catégorie: {categoryName}</h1>
+        {properties.map(property => (
+          <div key={property.name} className="Filter">
+            <h3>{property.name}</h3>
+            <select
+              value={selectedFilters[property.name] || 'Tous'}
+              onChange={(e) => handleFilterChange(property.name, e.target.value)}
+            >
+              <option value="Tous">Tous</option>
+              {property.values.map(value => (
+                <option key={value} value={value}>{value}</option>
+              ))}
+            </select>
+          </div>
+        ))}
+      </div>
       <div className="ProductsGrid">
-        {products.map(product => (
-          <div key={product._id} className="product-card">
+        {filteredProducts.map(product => (
+          <div key={product._id} className="category-card">
             <h3>{product.title}</h3>
-            <button className='button-product' onClick={() => handleProductClick(categoryId, product._id)}>
+            <button onClick={() => handleProductClick(categoryId, product._id)}>
               Voir le produit
             </button>
           </div>
@@ -43,12 +82,14 @@ export async function getServerSideProps(context) {
   }
 
   const products = await Produit.find({ categorie: categoryId });
+  const properties = category.proprietes;
 
   return {
     props: {
-      products: JSON.parse(JSON.stringify(products)),
+      initialProducts: JSON.parse(JSON.stringify(products)),
       categoryName: category.name,
       categoryId,
+      properties: JSON.parse(JSON.stringify(properties)),
     },
   };
 }
