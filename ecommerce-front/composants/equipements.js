@@ -15,17 +15,17 @@ export default function Equipement() {
 
                     <div className="equipement">
                         <img className="img-list-equip" src="chaussure.jpg" />
-                        <Link className="btn-equipement" href={""}>Acheter maintenant</Link>
+                        <Link className="btn-equipement" href={"/categorie/6634eed756190cda6353ef11"}>Acheter maintenant</Link>
                     </div>
 
                     <div className="equipement">
                         <img className="img-list-equip" src="sac.jpg" />
-                        <Link className="btn-equipement" href={""}>Acheter maintenant</Link>
+                        <Link className="btn-equipement" href={"/categorie/6634ef6c56190cda6353ef1c"}>Acheter maintenant</Link>
                     </div>
 
                     <div className="equipement">
                         <img className="img-list-equip" src="tente.jpg" />
-                        <Link className="btn-equipement" href={""}>Acheter maintenant</Link>
+                        <Link className="btn-equipement" href={"/categorie/6634eecc56190cda6353ef0e"}>Acheter maintenant</Link>
                     </div>
 
                 </section>
@@ -33,12 +33,12 @@ export default function Equipement() {
                 <section className="list-equipement">
                     <div className="equipement">
                         <img className="img-list-equip" src="lit.jpg" />
-                        <Link className="btn-equipement" href={""}>Acheter maintenant</Link>
+                        <Link className="btn-equipement" href={"/categorie/6634eefd56190cda6353ef14"}>Acheter maintenant</Link>
                     </div>
 
                     <div className="equipement">
                         <img className="img-list-equip" src="blouson.jpg" />
-                        <Link className="btn-equipement" href={""}>Acheter maintenant</Link>
+                        <Link className="btn-equipement" href={"/categorie/6634eed756190cda6353ef11"}>Acheter maintenant</Link>
                     </div>
 
                     <div className="equipement voir-plus">

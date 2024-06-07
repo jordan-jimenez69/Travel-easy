@@ -55,7 +55,10 @@ const CategoryProducts = ({ initialProducts, categoryName, categoryId, propertie
             </select>
           </div>
         ))}
-      </div>
+         </div>
+      {filteredProducts.length === 0 && (
+        <p>Pas de produit disponible avec les filtres sélectionnés.</p>
+      )}
       <div className="ProductsGrid">
         {filteredProducts.map(product => (
           <div key={product._id} className="category-card">
