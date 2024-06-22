@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Link from "next/link";
 
-
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -39,7 +38,7 @@ const LoginForm = () => {
         <button type="submit" className="btn btn-primary">Connexion</button>
       </form>
       <p className="register-link">
-        Si vous n'avez pas de compte, <Link href={""}>créez-en un</Link>.
+        Si vous n'avez pas de compte, <Link href={"/register"}>créez-en un</Link>.
       </p>
     </div>
   );

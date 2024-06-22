@@ -21,7 +21,7 @@ export default function Navbar() {
               <Link href="/panier">Panier</Link>
             </li>
             <li className="li-navbar">
-              <Link href="/compte">Compte</Link>
+              <Link href="/login">Compte</Link>
             </li>
           </ul>
         </div>
