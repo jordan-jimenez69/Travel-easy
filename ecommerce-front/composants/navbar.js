@@ -15,9 +15,6 @@ export default function Navbar() {
               <Link href="/boutique">Boutique</Link>
             </li>
             <li className="li-navbar">
-              <Link href="/randonnees">Randonnées</Link>
-            </li>
-            <li className="li-navbar">
               <Link href="/panier">Panier</Link>
             </li>
             <li className="li-navbar">
