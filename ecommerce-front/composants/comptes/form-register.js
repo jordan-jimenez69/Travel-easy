@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import Link from "next/link";
 
 const RegisterForm = () => {
+  const [firstname, setFirstname] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleRegister = (event) => {
     event.preventDefault();
+    console.log('FirstName:', firstname);
     console.log('Name:', name);
     console.log('Email:', email);
     console.log('Password:', password);
@@ -18,6 +20,16 @@ const RegisterForm = () => {
       <h2>Inscription</h2>
       <form onSubmit={handleRegister}>
         <div className="register-form-group">
+          <label htmlFor="firstname">Prénom:</label>
+          <input
+            type="text"
+            id="firstname"
+            value={firstname}
+            onChange={(e) => setFirstname(e.target.value)}
+            required
+          />
+          </div>
+          <div className="register-form-group">
           <label htmlFor="name">Nom:</label>
           <input
             type="text"
