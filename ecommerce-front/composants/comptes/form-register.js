@@ -6,13 +6,38 @@ const RegisterForm = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
-  const handleRegister = (event) => {
+  const handleRegister = async (event) => {
     event.preventDefault();
-    console.log('FirstName:', firstname);
-    console.log('Name:', name);
-    console.log('Email:', email);
-    console.log('Password:', password);
+
+    try {
+      const response = await fetch('/api/users', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ firstname, name, email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setSuccess('Inscription réussie. Vous pouvez maintenant vous connecter.');
+        setError('');
+        setFirstname('');
+        setName('');
+        setEmail('');
+        setPassword('');
+      } else {
+        setError(data.message);
+        setSuccess('');
+      }
+    } catch (error) {
+      setError('Erreur du serveur. Veuillez réessayer plus tard.');
+      setSuccess('');
+    }
   };
 
   return (
@@ -28,8 +53,8 @@ const RegisterForm = () => {
             onChange={(e) => setFirstname(e.target.value)}
             required
           />
-          </div>
-          <div className="register-form-group">
+        </div>
+        <div className="register-form-group">
           <label htmlFor="name">Nom:</label>
           <input
             type="text"
@@ -61,6 +86,8 @@ const RegisterForm = () => {
         </div>
         <button type="submit" className="register-btn btn-primary">S'inscrire</button>
       </form>
+      {error && <p className="error-message">{error}</p>}
+      {success && <p className="success-message">{success}</p>}
       <p className="register-login-link">
         Vous avez déjà un compte ? <Link href={"/login"}>Connectez-vous</Link>.
       </p>
