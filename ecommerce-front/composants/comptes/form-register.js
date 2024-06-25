@@ -9,8 +9,19 @@ const RegisterForm = () => {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+  const validatePassword = (password) => {
+    const passwordRegex = /^(?=.*[A-Z]).{6,}$/;
+    return passwordRegex.test(password);
+  };
+
   const handleRegister = async (event) => {
     event.preventDefault();
+
+    if (!validatePassword(password)) {
+      setError('Le mot de passe doit contenir au moins 6 caractères et une majuscule.');
+      setSuccess('');
+      return;
+    }
 
     try {
       const response = await fetch('/api/users', {
