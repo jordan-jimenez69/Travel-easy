@@ -1,36 +1,39 @@
-import React, { useState } from 'react';
-import Link from "next/link";
+import React, { useState, useContext } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
+import UserContext from '../../contexts/UserContext';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const { login } = useContext(UserContext);
   const router = useRouter();
 
   const handleLogin = async (event) => {
     event.preventDefault();
+    setError('');
 
     try {
       const response = await fetch('/api/login', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ email, password })
       });
 
-      const data = await response.json();
-
       if (response.ok) {
-        setError('');
-        router.push('/');
-        (window.confirm('Vous etes connecter'))
+        const userData = await response.json();
+        login(userData);
+        router.push('/compte');
       } else {
-        setError(data.message);
+        const errorData = await response.json();
+        setError(errorData.message || 'Erreur de connexion');
       }
     } catch (error) {
-      setError('Erreur du serveur. Veuillez réessayer plus tard.');
+      console.error('Erreur lors de la connexion', error);
+      setError('Erreur lors de la connexion');
     }
   };
 
@@ -58,11 +61,11 @@ const LoginForm = () => {
             required
           />
         </div>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
         <button type="submit" className="btn btn-primary">Connexion</button>
       </form>
-      {error && <p className="error-message">{error}</p>}
       <p className="register-link">
-        Si vous n'avez pas de compte, <Link href={"/register"}>créez-en un</Link>.
+        Si vous n'avez pas de compte, <Link href="/register">créez-en un</Link>.
       </p>
     </div>
   );

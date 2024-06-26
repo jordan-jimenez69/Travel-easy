@@ -6,15 +6,15 @@ export default function Home() {
   return (
 
     <>
-      <div>
+      <div className="">
         <Navbar />
       </div>
 
-      <div>
+      <div className="">
         <Accueil />
       </div>
 
-      <div>
+      <div className="">
         <Equipement />
       </div>
 
