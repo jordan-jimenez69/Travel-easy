@@ -22,13 +22,12 @@ const Compte = () => {
         <Navbar />
       </div>
 
-      <div>
-        <h1>Mon Compte</h1>
-        <p>Bienvenue, {user.firstname} {user.name}</p>
-        <button onClick={logout}>Déconnexion</button>
+      <div className="container">
+        <h1 className="title">Mon Compte</h1>
+        <p className="welcome-text">Bienvenue, {user.firstname} {user.name}</p>
+        <button className="logout-button" onClick={logout}>Déconnexion</button>
       </div>
     </>
-
   );
 };
 
