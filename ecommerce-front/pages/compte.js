@@ -12,7 +12,6 @@ export default function Compte_Page () {
       <div>
         <Compte />
       </div>
-
     </>
   );
 };
