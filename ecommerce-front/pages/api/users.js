@@ -26,8 +26,39 @@ export default async function handler(req, res) {
       console.log('Non autorisé, pas de userId');
       res.status(401).json({ message: 'Non autorisé' });
     }
+  } else if (req.method === 'POST') {
+    const { firstname, name, email, password } = req.body;
+    console.log('Request body:', req.body);
+
+    if (!firstname || !name || !email || !password) {
+      return res.status(400).json({ message: 'Tous les champs sont requis' });
+    }
+
+    try {
+      const existingUser = await Utilisateur.findOne({ email });
+      if (existingUser) {
+        return res.status(400).json({ message: 'Cet email est déjà utilisé' });
+      }
+
+      const newUser = new Utilisateur({ firstname, name, email, password });
+      await newUser.save();
+
+      const cookies = new Cookies(req, res);
+      cookies.set('userId', newUser._id.toString(), {
+        httpOnly: true,
+        sameSite: 'strict',
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours
+        path: '/', // Assure que le cookie est accessible sur tout le site
+      });
+      console.log('Cookie userId défini:', newUser._id.toString());
+
+      res.status(201).json({ message: 'Utilisateur créé avec succès' });
+    } catch (error) {
+      console.error('Erreur lors de la création de l\'utilisateur :', error);
+      res.status(500).json({ message: 'Erreur serveur. Veuillez réessayer plus tard.' });
+    }
   } else {
-    res.setHeader('Allow', ['GET']);
+    res.setHeader('Allow', ['GET', 'POST']);
     res.status(405).end(`Méthode ${req.method} non autorisée`);
   }
 }
