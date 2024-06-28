@@ -1,5 +1,6 @@
 import { Utilisateur } from '@/models/user';
 import { mongooseConnect } from '@/lib/mongoose';
+import bcrypt from 'bcryptjs';
 
 export default async function handler(req, res) {
   console.log('Handler called with method:', req.method);
@@ -22,12 +23,12 @@ export default async function handler(req, res) {
         return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
       }
 
-      const isPasswordValid = password === user.password;
+      const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
         console.log('Mot de passe incorrect');
         return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
       }
-
+      
       res.status(200).json({ _id: user._id, firstname: user.firstname, name: user.name, email: user.email });
     } catch (error) {
       console.error('Erreur de connexion :', error);

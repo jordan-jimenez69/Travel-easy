@@ -48,13 +48,12 @@ export default async function handler(req, res) {
       await newUser.save();
 
       const cookies = new Cookies(req, res);
-      cookies.set('userId', newUser._id.toString(), {
+      cookies.set('userId', user._id.toString(), {
         httpOnly: true,
         sameSite: 'strict',
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours
         path: '/',
       });
-      console.log('Cookie userId défini:', newUser._id.toString());
 
       res.status(201).json({ message: 'Utilisateur créé avec succès' });
     } catch (error) {
