@@ -1,6 +1,7 @@
 import { Utilisateur } from '@/models/user';
 import { mongooseConnect } from '@/lib/mongoose';
 import Cookies from 'cookies';
+import bcrypt from 'bcryptjs';
 
 export default async function handler(req, res) {
   console.log('Handler called with method:', req.method);
@@ -40,7 +41,10 @@ export default async function handler(req, res) {
         return res.status(400).json({ message: 'Cet email est déjà utilisé' });
       }
 
-      const newUser = new Utilisateur({ firstname, name, email, password });
+      // Hachage du mot de passe
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      const newUser = new Utilisateur({ firstname, name, email, password: hashedPassword });
       await newUser.save();
 
       const cookies = new Cookies(req, res);
@@ -48,7 +52,7 @@ export default async function handler(req, res) {
         httpOnly: true,
         sameSite: 'strict',
         maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours
-        path: '/', // Assure que le cookie est accessible sur tout le site
+        path: '/',
       });
       console.log('Cookie userId défini:', newUser._id.toString());
 
