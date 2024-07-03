@@ -28,8 +28,13 @@ export default function ProduitForm({
     async function saveProduct(ev) {
         ev.preventDefault();
 
-        if (!title.trim() || !price.trim() || !description.trim() || !categorie.trim()) {
-            alert("Tous les champs doivent être remplis !");
+        if (!title.trim() || !description.trim() || !categorie.trim()) {
+            alert("Tous les champs de texte sont obligatoires !");
+            return;
+        }
+
+        if (!price || isNaN(price) || Number(price) <= 0) {
+            alert("Le prix doit être un nombre valide et supérieur à zéro !");
             return;
         }
 
@@ -106,19 +111,17 @@ export default function ProduitForm({
                 ))}
             </select>
 
-            <label
-            className="flex gap-1 mb-1"
-            >Propriété</label>
+            <label className="flex gap-1 mb-1">Propriété</label>
             {proprietesToFill.length > 0 && proprietesToFill.map(p => (
-                
-                <div className="flex gap-1">
-                    {p.name}
+                <div key={p.name} className="flex gap-1">
+                    <div>{p.name}</div>
                     <select
-                        value={productProprietes[p.name]}
-                        onChange={ev => setProductProp(p.name, ev.target.value)}>
-
+                        value={productProprietes[p.name] || ''}
+                        onChange={ev => setProductProp(p.name, ev.target.value)}
+                    >
+                        <option value=''>Uncategorized</option>
                         {p.values.map(v => (
-                            <option value={v}>{v}</option>
+                            <option key={v} value={v}>{v}</option>
                         ))}
                     </select>
                 </div>
