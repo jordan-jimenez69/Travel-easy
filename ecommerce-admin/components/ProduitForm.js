@@ -28,6 +28,11 @@ export default function ProduitForm({
     async function saveProduct(ev) {
         ev.preventDefault();
 
+        if (!title.trim() || !price.trim() || !description.trim() || !categorie.trim()) {
+            alert("Tous les champs doivent être remplis !");
+            return;
+        }
+
         const data = {
             title, price, description, categorie,
             proprietes: productProprietes

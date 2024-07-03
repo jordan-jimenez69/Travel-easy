@@ -19,6 +19,17 @@ export default function Categories() {
     }
     async function saveCategories(ev) {
         ev.preventDefault();
+
+        if (!name.trim()) {
+            alert("Le nom de la catégorie est obligatoire !");
+            return;
+        }
+
+        if (proprietes.some(p => !p.name.trim() || !p.values.trim())) {
+            alert("Toutes les propriétés doivent avoir un nom et des valeurs !");
+            return;
+        }
+
         const data = {
             name, proprietes: proprietes.map(p => ({
                 name: p.name, values: p.values.split(','),
@@ -59,6 +70,7 @@ export default function Categories() {
         }))
         );
     }
+
     function addProprietes() {
         setProprietes(prev => {
             return [...prev, { name: '', value: '' }];

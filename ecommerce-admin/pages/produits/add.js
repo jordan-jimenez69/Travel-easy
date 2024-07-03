@@ -10,7 +10,7 @@ export default function NewProduct() {
     return (
         <Layout>
             <h1>Ajouté un nouveau Produit</h1>
-            <ProduitForm></ProduitForm>
+            <ProduitForm />
             <button className="btn-return-product"
                 onClick={goBack}>Retour</button>
         </Layout>
