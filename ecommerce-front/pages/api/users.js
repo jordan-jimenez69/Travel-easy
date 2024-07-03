@@ -5,7 +5,6 @@ import bcrypt from 'bcryptjs';
 
 export default async function handler(req, res) {
   console.log('Handler called with method:', req.method);
-  await mongooseConnect();
 
   if (req.method === 'GET') {
     const cookies = new Cookies(req, res);
@@ -13,6 +12,8 @@ export default async function handler(req, res) {
 
     if (userId) {
       try {
+        await mongooseConnect();
+
         const user = await Utilisateur.findById(userId).select('-password');
         if (user) {
           res.status(200).json(user);
@@ -23,41 +24,34 @@ export default async function handler(req, res) {
         console.error('Erreur lors de la récupération des informations utilisateur :', error);
         res.status(500).json({ message: 'Erreur serveur. Veuillez réessayer plus tard.' });
       }
-    } else {
-      console.log('Non autorisé, pas de userId');
-      res.status(401).json({ message: 'Non autorisé' });
-    }
+    } 
   } else if (req.method === 'POST') {
-    const { firstname, name, email, password } = req.body;
+    const { email, password } = req.body;
     console.log('Request body:', req.body);
 
-    if (!firstname || !name || !email || !password) {
-      return res.status(400).json({ message: 'Tous les champs sont requis' });
+    if (!email || !password) {
+      console.log('Email ou mot de passe manquant');
+      return res.status(400).json({ message: 'Email et mot de passe requis' });
     }
 
     try {
-      const existingUser = await Utilisateur.findOne({ email });
-      if (existingUser) {
-        return res.status(400).json({ message: 'Cet email est déjà utilisé' });
+      await mongooseConnect();
+
+      const user = await Utilisateur.findOne({ email });
+      if (!user) {
+        console.log('Utilisateur non trouvé');
+        return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
       }
 
-      // Hachage du mot de passe
-      const hashedPassword = await bcrypt.hash(password, 10);
+      const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        console.log('Mot de passe incorrect');
+        return res.status(401).json({ message: 'Email ou mot de passe incorrect' });
+      }
 
-      const newUser = new Utilisateur({ firstname, name, email, password: hashedPassword });
-      await newUser.save();
-
-      const cookies = new Cookies(req, res);
-      cookies.set('userId', user._id.toString(), {
-        httpOnly: true,
-        sameSite: 'strict',
-        maxAge: 7 * 24 * 60 * 60 * 1000, // 7 jours
-        path: '/',
-      });
-
-      res.status(201).json({ message: 'Utilisateur créé avec succès' });
+      res.status(200).json({ _id: user._id, firstname: user.firstname, name: user.name, email: user.email });
     } catch (error) {
-      console.error('Erreur lors de la création de l\'utilisateur :', error);
+      console.error('Erreur de connexion :', error);
       res.status(500).json({ message: 'Erreur serveur. Veuillez réessayer plus tard.' });
     }
   } else {
