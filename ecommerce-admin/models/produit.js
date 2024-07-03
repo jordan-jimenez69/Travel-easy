@@ -6,6 +6,7 @@ const ProduitSchema = new Schema({
     description: { type: String, required: true },
     categorie: { type: mongoose.Types.ObjectId, ref: 'Categorie', required: true },
     proprietes: { type: Object },
+    images: [{type:String}],
 });
 
 export const Produit = models.Produit || model('Produit', ProduitSchema);

@@ -8,11 +8,12 @@ export default function ProduitForm({
     description: existingdescription,
     price: existingprice,
     categorie: assignedcategorie,
-    images,
+    images:existingImages,
     proprietes: assignedProprietes,
 }) {
     const [title, setTitle] = useState(existingtitle || '');
     const [price, setPrice] = useState(existingprice || '');
+    const [images,setImages] = useState(existingImages || []);
     const [description, setDescription] = useState(existingdescription || '');
     const [categorie, setCategorie] = useState(assignedcategorie || '');
     const [productProprietes, setProductProprietes] = useState(assignedProprietes || {});
@@ -31,12 +32,11 @@ export default function ProduitForm({
         if (!categorie) {
             alert("Selectionner une categorie !")
             return;
-        }
+        };
 
         const data = {
             title, price, description, categorie,
-            proprietes: productProprietes
-        };
+            images, proprietes : productProprietes,};
 
         if (_id) {
             await axios.put('/api/produits', { ...data, _id });
@@ -56,11 +56,11 @@ export default function ProduitForm({
             for (const file of files) {
                 data.append('file', file);
             }
-            const res = await fetch('/api/upload/', {
-                method: 'POST',
-                body: data,
+            const res = await axios.post ('/api/upload/', data);
+            setImages(oldImages => {
+                return [...oldImages, ...res.data.links];
             });
-            console.log(res.data);
+            
         }
     }
 
@@ -126,7 +126,12 @@ export default function ProduitForm({
 
             <div className="form-group-strict">
                 <label>Photo</label>
-                <div className="mt-2">
+                <div className="mt-2 flex flex-wrap gap-2">
+                   {!!images?.length && images.map(link => (
+                    <div key={link} className="h-24">
+                        <img src={link} alt="" className="rounded-lg"/>
+                    </div>
+                   ))}
                     <label className="w-24 h-24 border flex text-center cursor-pointer items-center justify-center text-sm gap-1">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
                             <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
@@ -138,11 +143,10 @@ export default function ProduitForm({
                             className="hidden"
                             onChange={uploadImages} />
                     </label>
-                    {!images?.length && (
                         <div>
                             Pas de Photo
                         </div>
-                    )}
+                
                 </div>
             </div>
 
