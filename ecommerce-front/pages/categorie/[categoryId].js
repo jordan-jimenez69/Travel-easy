@@ -22,6 +22,10 @@ const CategoryProducts = ({ initialProducts, categoryName, categoryId, propertie
     });
   };
 
+  const handleResetFilters = () => {
+    setSelectedFilters({});
+  };
+
   useEffect(() => {
     const applyFilters = () => {
       let filtered = initialProducts;
@@ -40,7 +44,7 @@ const CategoryProducts = ({ initialProducts, categoryName, categoryId, propertie
     <div>
       <Navbar />
       <div className="Filters">
-      <h1 className='Title-Product'>Produits pour la catégorie: {categoryName}</h1>
+        <h1 className='Title-Product'>Produits pour la catégorie: {categoryName}</h1>
         {properties.map(property => (
           <div key={property.name} className="Filter">
             <h3>{property.name}</h3>
@@ -55,9 +59,12 @@ const CategoryProducts = ({ initialProducts, categoryName, categoryId, propertie
             </select>
           </div>
         ))}
-         </div>
+        <button onClick={handleResetFilters} className="reset-button">Réinitialiser les filtres</button>
+      </div>
       {filteredProducts.length === 0 && (
-        <p>Pas de produit disponible avec les filtres sélectionnés.</p>
+        <div className='filtre_nodispo'>
+          <p>Pas de produit disponible avec les filtres sélectionnés.</p>
+        </div>
       )}
       <div className="ProductsGrid">
         {filteredProducts.map(product => (
