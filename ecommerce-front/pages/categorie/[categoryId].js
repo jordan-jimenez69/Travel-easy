@@ -70,6 +70,10 @@ const CategoryProducts = ({ initialProducts, categoryName, categoryId, propertie
         {filteredProducts.map(product => (
           <div key={product._id} className="category-card">
             <h3>{product.title}</h3>
+            <div>
+            {product.images && product.images.length > 0 && (
+                        <img src={product.images[0]} alt={product.title} className="product-image" />
+                    )} </div>
             <button onClick={() => handleProductClick(categoryId, product._id)}>
               Voir le produit
             </button>

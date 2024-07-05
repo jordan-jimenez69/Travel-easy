@@ -8,11 +8,12 @@ export default function ProduitForm({
     description: existingdescription,
     price: existingprice,
     categorie: assignedcategorie,
-    images,
+    images: existingImages,
     proprietes: assignedProprietes,
 }) {
     const [title, setTitle] = useState(existingtitle || '');
     const [price, setPrice] = useState(existingprice || '');
+    const [images, setImages] = useState(existingImages || []);
     const [description, setDescription] = useState(existingdescription || '');
     const [categorie, setCategorie] = useState(assignedcategorie || '');
     const [productProprietes, setProductProprietes] = useState(assignedProprietes || {});
@@ -40,7 +41,7 @@ export default function ProduitForm({
 
         const data = {
             title, price, description, categorie,
-            proprietes: productProprietes
+            images, proprietes: productProprietes,
         };
 
         if (_id) {
@@ -61,11 +62,24 @@ export default function ProduitForm({
             for (const file of files) {
                 data.append('file', file);
             }
-            const res = await fetch('/api/upload/', {
-                method: 'POST',
-                body: data,
+            const res = await axios.post('/api/upload/', data);
+            setImages(oldImages => {
+                return [...oldImages, ...res.data.links];
             });
-            console.log(res.data);
+
+        }
+    }
+
+    async function deleteImage(imageKey) {
+        try {
+            const response = await axios.delete('/api/deleteImage', {
+                data: { key: imageKey },
+            });
+            if (response.status === 200) {
+                setImages(oldImages => oldImages.filter(image => image !== imageKey));
+            }
+        } catch (error) {
+            console.error('Failed to delete image:', error);
         }
     }
 
@@ -129,9 +143,21 @@ export default function ProduitForm({
 
             <div className="form-group-strict">
                 <label>Photo</label>
-                <div className="mt-2">
+                <div className="mt-2 flex flex-wrap gap-2">
+                    {!!images?.length && images.map(link => (
+                        <div key={link} className="h-24 relative">
+                            <img src={link} alt="" className="rounded-lg" />
+                            <button
+                                type="button"
+                                onClick={() => deleteImage(link)}
+                                className="absolute top-0 right-0 bg-red-500 text-white rounded-full p-1"
+                            >
+                                &times;
+                            </button>
+                        </div>
+                    ))}
                     <label className="w-24 h-24 border flex text-center cursor-pointer items-center justify-center text-sm gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-upload" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-upload" viewBox="0 0 16 16">
                             <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
                             <path d="M7.646 1.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 2.707V11.5a.5.5 0 0 1-1 0V2.707L5.354 4.854a.5.5 0 1 1-.708-.708z" />
                         </svg>
@@ -141,11 +167,6 @@ export default function ProduitForm({
                             className="hidden"
                             onChange={uploadImages} />
                     </label>
-                    {!images?.length && (
-                        <div>
-                            Pas de Photo
-                        </div>
-                    )}
                 </div>
             </div>
 

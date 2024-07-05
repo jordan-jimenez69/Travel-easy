@@ -7,14 +7,17 @@ import "@/styles/boutique/produit.css";
 import "@/styles/compte/login.css";
 import "@/styles/compte/register.css";
 import "@/styles/compte/compte_user.css";
+import "@/styles/paniers/panier.css";
 
 import { UserProvider } from '@/contexts/UserContext';
-
+import { CartProvider } from '@/contexts/CartContext';
 
 export default function App({ Component, pageProps }) {
   return (
-    <UserProvider>
-      <Component {...pageProps} />
+    <UserProvider >
+      <CartProvider>
+        <Component {...pageProps} />
+      </CartProvider>
     </UserProvider>
   );
 }

@@ -1,8 +1,11 @@
 import { mongooseConnect } from '@/lib/mongoose';
 import { Produit } from '@/models/produit';
 import Navbar from '@/composants/navbar';
+import { useCart } from '@/contexts/CartContext';
 
 const ProductDetail = ({ product }) => {
+    const { addToCart } = useCart();
+
     return (
         <div>
             <div>
@@ -13,7 +16,12 @@ const ProductDetail = ({ product }) => {
                 <h1 className='product-title'>Détails du produit: {product.title}</h1>
                 <p className='product-description'>Description: {product.description}</p>
                 <p className='product-price'>Prix: {product.price}€</p>
-                <button className='button-product'>Ajouté au panier</button>
+                <button 
+                    className='button-product'
+                    onClick={() => addToCart(product)}
+                >
+                    Ajouté au panier
+                </button>
             </div>
         </div>
     );
