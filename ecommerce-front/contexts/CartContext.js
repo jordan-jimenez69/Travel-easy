@@ -1,20 +1,47 @@
-import { createContext, useState, useContext } from 'react';
+import { createContext, useState, useEffect, useContext } from 'react';
 
-const CartContext = createContext();
+export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
-    const [cart, setCart] = useState([]);
+    const ls = typeof window !== "undefined" ? window.localStorage : null;
+    const [cartProducts, setCartProducts] = useState([]);
+
+    useEffect(() => {
+        if (cartProducts?.length > 0) {
+            ls?.setItem('cart', JSON.stringify(cartProducts));
+        }
+    }, [cartProducts]);
+
+    useEffect(() => {
+        if (ls && ls.getItem('cart')) {
+            setCartProducts(JSON.parse(ls.getItem('cart')));
+        }
+    }, []);
 
     const addToCart = (product) => {
-        setCart((prevCart) => [...prevCart, product]);
+        // Vérifier si le produit est déjà dans le panier
+        const productIndex = cartProducts.findIndex(item => item._id === product._id);
+        if (productIndex !== -1) {
+            // Produit déjà présent dans le panier : augmenter la quantité
+            const updatedCart = [...cartProducts];
+            updatedCart[productIndex].quantity += 1;
+            setCartProducts(updatedCart);
+        } else {
+            // Produit non présent dans le panier : l'ajouter avec une quantité de 1
+            setCartProducts(prevCart => [...prevCart, { ...product, quantity: 1 }]);
+        }
     };
 
     const removeFromCart = (productId) => {
-        setCart((prevCart) => prevCart.filter(product => product._id !== productId));
+        setCartProducts((prevCart) => prevCart.filter(product => product._id !== productId));
+
+        if (cartProducts.length === 1) {
+            ls?.removeItem('cart');
+        }
     };
 
     return (
-        <CartContext.Provider value={{ cart, addToCart, removeFromCart }}>
+        <CartContext.Provider value={{ cartProducts, addToCart, removeFromCart }}>
             {children}
         </CartContext.Provider>
     );

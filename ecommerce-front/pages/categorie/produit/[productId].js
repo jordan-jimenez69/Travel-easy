@@ -2,9 +2,17 @@ import { mongooseConnect } from '@/lib/mongoose';
 import { Produit } from '@/models/produit';
 import Navbar from '@/composants/navbar';
 import { useCart } from '@/contexts/CartContext';
+import { useRouter } from 'next/router';
 
 const ProductDetail = ({ product }) => {
     const { addToCart } = useCart();
+    
+    const router = useRouter();
+    
+    const handleAddToCart = () => {
+        addToCart(product);
+        router.push('/panier');
+    };
 
     return (
         <div>
@@ -18,10 +26,7 @@ const ProductDetail = ({ product }) => {
                 <p className='product-price'>Prix: {product.price}€</p>
                 <button 
                     className='button-product'
-                    onClick={() => addToCart(product)}
-                >
-                    Ajouté au panier
-                </button>
+                    onClick={handleAddToCart}>Ajouté au panier</button>
             </div>
         </div>
     );
