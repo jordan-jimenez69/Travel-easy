@@ -13,7 +13,7 @@ export default function NewCategories({ categories }) {
         categories.map(categorie => (
           <div key={categorie._id} className="category-card">
             <h3>{categorie.name}</h3>
-            <button onClick={() => handleCategoryClick(categorie._id)}>
+            <button className='button-catego' onClick={() => handleCategoryClick(categorie._id)}>
               Voir les produits
             </button>
           </div>
