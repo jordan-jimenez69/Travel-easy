@@ -1,12 +1,19 @@
 import { useCart } from '@/contexts/CartContext';
 
 const Page_Panier = () => {
-    const { cartProducts, removeFromCart } = useCart();
+    const { cartProducts, removeFromCart, increaseQuantity, decreaseQuantity } = useCart();
 
     const handleRemove = (productId) => {
         removeFromCart(productId);
     };
 
+    const handleIncreaseQuantity = (productId) => {
+        increaseQuantity(productId);
+    };
+
+    const handleDecreaseQuantity = (productId) => {
+        decreaseQuantity(productId);
+    };
 
     return (
         <div className="cart-container">
@@ -24,7 +31,12 @@ const Page_Panier = () => {
                             <div className='product-info'>
                                 <h2 className='product-title'>{product.title}</h2>
                                 <p className='product-price'>Prix: {product.price}€</p>
-                                <p>Quantité: {product.quantity}</p> {/* Affichage de la quantité */}
+                            </div>
+                            <div className="quantity-controls">
+                            <p className='product-title-quant'>Quantité:</p> 
+                                <button className='quantity-button' onClick={() => handleDecreaseQuantity(product._id)}>-</button>
+                               <p> {product.quantity}</p>{}
+                                <button className='quantity-button' onClick={() => handleIncreaseQuantity(product._id)}>+</button>
                             </div>
                             <button className='remove-button' onClick={() => handleRemove(product._id)}>Supprimer</button>
                             <button className='checkout-button'>Commander</button>

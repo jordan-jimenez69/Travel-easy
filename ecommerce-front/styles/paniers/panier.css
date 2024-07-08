@@ -27,6 +27,31 @@
     margin: 0;
 }
 
+.product-title-quant {
+    font-size: 1.2em;
+    margin: 0;
+    margin-right: 10px;
+}
+
+.quantity-controls {
+    display: flex;
+    align-items: center;
+}
+
+.quantity-button {
+    padding: 5px 10px;
+    font-size: 16px;
+    margin-right: 5px;
+    margin-left: 5px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.quantity-button:hover {
+    background-color: #e0e0e0;
+}
+
 .product-price {
     color: #888;
     margin-top: 5px;
@@ -40,6 +65,7 @@
     font-size: 1.5em;
     padding: 0;
     margin-right: 20px;
+    margin-left: 200px;
 }
 
 .remove-button:hover {
