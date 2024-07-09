@@ -1,11 +1,12 @@
 import React, { useContext, useEffect } from 'react';
 import UserContext from '@/contexts/UserContext';
 import { useRouter } from 'next/router';
+import handleLogout from '../logout';
 
 export default function Compte() {
     const { user, logout } = useContext(UserContext);
     const router = useRouter();
-  
+
     useEffect(() => {
     }, [user, router]);
   
@@ -18,7 +19,7 @@ export default function Compte() {
             <div className="container">
                 <h1 className="title">Mon Compte</h1>
                 <p className="welcome-text">Bienvenue, {user.firstname} {user.name}</p>
-                <button className="logout-button" onClick={logout}>Déconnexion</button>
+                <button className="logout-button" onClick={handleLogout}>Déconnexion</button>
             </div>
         </main>
     );

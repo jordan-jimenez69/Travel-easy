@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useContext } from 'react';
 import UserContext from '../contexts/UserContext';
+import handleLogout from './logout';
 
 export default function Navbar() {
   const { user, logout } = useContext(UserContext);
@@ -27,7 +28,7 @@ export default function Navbar() {
                 <Link href="/compte">Mon Compte</Link>
               </li>
               <li className="li-navbar">
-             <a onClick={logout} style={{ cursor: 'pointer' }}>Déconnexion</a>
+             <a onClick={handleLogout} style={{ cursor: 'pointer' }}>Déconnexion</a>
               </li>
             </>
           ) : (
