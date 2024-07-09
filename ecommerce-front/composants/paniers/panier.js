@@ -1,7 +1,10 @@
 import { useCart } from '@/contexts/CartContext';
+import { useRouter } from 'next/router';
 
 const Page_Panier = () => {
     const { cartProducts, removeFromCart, increaseQuantity, decreaseQuantity } = useCart();
+
+    const router = useRouter();
 
     const handleRemove = (productId) => {
         if (window.confirm("Êtes-vous sûr de vouloir Supprimer le produit ?")) {
@@ -19,6 +22,10 @@ const Page_Panier = () => {
 
     const calculateTotalPrice = () => {
         return cartProducts.reduce((total, product) => total + product.price * product.quantity, 0);
+    };
+
+    const handleCheckout = () => {
+        router.push('/commander');
     };
 
     return (
@@ -51,7 +58,7 @@ const Page_Panier = () => {
                         ))}
                         <div className="total-container">
                             <h2>Total: {calculateTotalPrice()}€</h2>
-                            <button className='checkout-button'>Commander</button>
+                            <button className='checkout-button' onClick={handleCheckout}>Commander</button>
                         </div>
                     </>
                 )}
