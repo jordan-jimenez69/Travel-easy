@@ -58,7 +58,6 @@ const Page_Panier = () => {
                         ))}
                         <div className="total-container">
                             <h2>Total: {calculateTotalPrice()}€</h2>
-                            <button className='checkout-button' onClick={handleCheckout}>Commander</button>
                         </div>
                     </>
                 )}
