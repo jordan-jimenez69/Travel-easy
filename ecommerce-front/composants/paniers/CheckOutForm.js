@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import { CartContext } from '@/contexts/CartContext';
+import React, { useContext, useState } from 'react';
 
 const CheckoutForm = () => {
+    const {cartProducts} = useContext(CartContext)
     const [firstname, setFirstname] = useState('');
     const [name, setName] = useState('');
     const [ville, setVille] = useState('');
@@ -73,6 +75,7 @@ const CheckoutForm = () => {
                         required
                     />
                 </div>
+                <input type='hidden' value={cartProducts.join(',')}></input>
                 <button type="submit" className="register-btn btn-primary">Continuer vers payement</button>
             </form>
         </div>
