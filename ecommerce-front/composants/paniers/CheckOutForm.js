@@ -2,7 +2,7 @@ import { CartContext } from '@/contexts/CartContext';
 import React, { useContext, useState } from 'react';
 
 const CheckoutForm = () => {
-    const {cartProducts} = useContext(CartContext)
+    const { cartProducts } = useContext(CartContext);
     const [firstname, setFirstname] = useState('');
     const [name, setName] = useState('');
     const [ville, setVille] = useState('');
@@ -10,11 +10,45 @@ const CheckoutForm = () => {
     const [adresse, setAdresse] = useState('');
     const [pays, setPays] = useState('');
 
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        
+        const products = cartProducts.map(product => product._id);
+
+        const orderData = {
+            firstname,
+            name,
+            ville,
+            codePost,
+            adresse,
+            pays,
+            products
+        };
+
+        try {
+            const response = await fetch('/api/orders', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(orderData),
+            });
+
+            if (response.ok) {
+                console.log('Order created successfully');
+            } else {
+                const errorData = await response.json();
+                console.error('Error creating order:', errorData);
+            }
+        } catch (error) {
+            console.error('Error creating order:', error);
+        }
+    };
 
     return (
         <div className="chekout-container">
             <h2>Vos Information</h2>
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div className="chekout-form-group">
                     <label htmlFor="firstname">Prénom:</label>
                     <input
@@ -75,7 +109,6 @@ const CheckoutForm = () => {
                         required
                     />
                 </div>
-                <input type='hidden' value={cartProducts.join(',')}></input>
                 <button type="submit" className="register-btn btn-primary">Continuer vers payement</button>
             </form>
         </div>

@@ -19,15 +19,12 @@ export const CartProvider = ({ children }) => {
     }, []);
 
     const addToCart = (product) => {
-        // Vérifier si le produit est déjà dans le panier
         const productIndex = cartProducts.findIndex(item => item._id === product._id);
         if (productIndex !== -1) {
-            // Produit déjà présent dans le panier : augmenter la quantité
             const updatedCart = [...cartProducts];
             updatedCart[productIndex].quantity += 1;
             setCartProducts(updatedCart);
         } else {
-            // Produit non présent dans le panier : l'ajouter avec une quantité de 1
             setCartProducts(prevCart => [...prevCart, { ...product, quantity: 1 }]);
         }
     };
@@ -40,6 +37,7 @@ export const CartProvider = ({ children }) => {
         }
     };
 
+//augmenter de 1 quantité
     const increaseQuantity = (productId) => {
         setCartProducts(prevCart =>
             prevCart.map(product =>
@@ -48,6 +46,7 @@ export const CartProvider = ({ children }) => {
         );
     };
 
+//baisser de 1 quantité
     const decreaseQuantity = (productId) => {
         setCartProducts(prevCart =>
             prevCart.map(product =>

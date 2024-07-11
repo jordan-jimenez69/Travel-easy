@@ -1,5 +1,3 @@
-// api/login.js
-
 import { Utilisateur } from '@/models/user';
 import { mongooseConnect } from '@/lib/mongoose';
 import bcrypt from 'bcryptjs';
