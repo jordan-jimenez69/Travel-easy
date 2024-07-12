@@ -37,6 +37,10 @@ export const CartProvider = ({ children }) => {
         }
     };
 
+    const clearCart = () => {
+        setCartProducts([]);
+    };
+
 //augmenter de 1 quantité
     const increaseQuantity = (productId) => {
         setCartProducts(prevCart =>
@@ -58,7 +62,7 @@ export const CartProvider = ({ children }) => {
     };
 
     return (
-        <CartContext.Provider value={{ cartProducts, addToCart, removeFromCart, increaseQuantity, decreaseQuantity }}>
+        <CartContext.Provider value={{ cartProducts, addToCart, removeFromCart, clearCart, setCartProducts, increaseQuantity, decreaseQuantity }}>
             {children}
         </CartContext.Provider>
     );

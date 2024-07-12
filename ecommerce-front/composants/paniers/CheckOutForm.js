@@ -2,7 +2,7 @@ import { CartContext } from '@/contexts/CartContext';
 import React, { useContext, useState } from 'react';
 
 const CheckoutForm = () => {
-    const { cartProducts } = useContext(CartContext);
+    const { cartProducts, clearCart  } = useContext(CartContext);
     const [firstname, setFirstname] = useState('');
     const [name, setName] = useState('');
     const [ville, setVille] = useState('');
@@ -12,7 +12,12 @@ const CheckoutForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
+        if (!firstname || !name || !ville || !codePost || !adresse || !pays || cartProducts.length === 0) {
+            console.error('Missing required fields');
+            return;
+        }
+
         const products = cartProducts.map(product => product._id);
 
         const orderData = {
@@ -35,7 +40,9 @@ const CheckoutForm = () => {
             });
 
             if (response.ok) {
-                console.log('Order created successfully');
+                const data = await response.json();
+                window.location.href = data.url;
+                localStorage.clear();
             } else {
                 const errorData = await response.json();
                 console.error('Error creating order:', errorData);
