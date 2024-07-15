@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath: '/Travel-easy',
+  assetPrefix: '/Travel-easy',
   reactStrictMode: true,
   async rewrites() {
     return [
