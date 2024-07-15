@@ -1,1 +1,1 @@
-{"version":1,"functions":{"/boutique":{},"/categorie/produit/[productId]":{},"/categorie/[categoryId]":{}}}
+{"version":1,"functions":{"/categorie/[categoryId]":{},"/boutique":{},"/categorie/produit/[productId]":{}}}
