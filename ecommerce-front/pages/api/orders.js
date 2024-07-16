@@ -1,7 +1,7 @@
 import { mongooseConnect } from '@/lib/mongoose';
 import Order from '@/models/Order';
 import Stripe from 'stripe';
-import { Produit } from '@/models/Produit';
+import { Produit } from '@/models/produit';
 
 const stripe = new Stripe(process.env.STRIPE_SK);
 
@@ -14,13 +14,13 @@ export default async function handler(req, res) {
 
             console.log("Request body:", req.body);
 
-            const uniqueIds = [...new Set(products)];
+            const uniqueIds = [...new Set(products.map(p => p._id))];
             const productsInfos = await Produit.find({ _id: { $in: uniqueIds } });
 
             let line_items = [];
-            for (const productId of uniqueIds) {
-                const productInfo = productsInfos.find(p => p._id.toString() === productId);
-                const quantity = products.filter(id => id === productId).length;
+            for (const product of products) {
+                const productInfo = productsInfos.find(p => p._id.toString() === product._id);
+                const quantity = product.quantity;
                 if (quantity > 0 && productInfo) {
                     line_items.push({
                         price_data: {
@@ -40,7 +40,7 @@ export default async function handler(req, res) {
                 codePost,
                 adresse,
                 pays,
-                products: uniqueIds
+                products: products.map(p => p._id) // Sauvegarder seulement les IDs
             });
             await newOrder.save();
 
