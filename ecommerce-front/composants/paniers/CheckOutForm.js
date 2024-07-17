@@ -1,8 +1,10 @@
 import { CartContext } from '@/contexts/CartContext';
+import UserContext from '@/contexts/UserContext';
 import React, { useContext, useState } from 'react';
 
 const CheckoutForm = () => {
     const { cartProducts, clearCart } = useContext(CartContext);
+    const { user } = useContext(UserContext);
     const [firstname, setFirstname] = useState('');
     const [name, setName] = useState('');
     const [ville, setVille] = useState('');
@@ -38,6 +40,7 @@ const CheckoutForm = () => {
             adresse,
             pays,
             products,
+            userId: user._id,
             total: calculateTotal()
         };
 
