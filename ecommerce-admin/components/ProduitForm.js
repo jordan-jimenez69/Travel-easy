@@ -19,7 +19,9 @@ export default function ProduitForm({
     const [productProprietes, setProductProprietes] = useState(assignedProprietes || {});
     const [goToProduits, setGoToProduits] = useState(false);
     const [categories, setCategories] = useState([]);
+    const [newSize, setNewSize] = useState('');
     const router = useRouter();
+
     useEffect(() => {
         axios.get('/api/categories').then(result => {
             setCategories(result.data);
@@ -86,9 +88,36 @@ export default function ProduitForm({
     function setProductProp(propName, value) {
         setProductProprietes(prev => {
             const newProductProps = { ...prev };
+            if (propName === 'Taille' && !Array.isArray(newProductProps[propName])) {
+                newProductProps[propName] = [];
+            }
             newProductProps[propName] = value;
-            return newProductProps
-        })
+            return newProductProps;
+        });
+    }
+
+    function removeSize(index) {
+        setProductProprietes(prev => {
+            const newProductProps = { ...prev };
+            if (Array.isArray(newProductProps.Taille)) {
+                newProductProps.Taille.splice(index, 1); // Supprimer l'élément à l'index spécifié
+            }
+            return newProductProps;
+        });
+    }
+
+    function addSize() {
+        if (newSize.trim() && !productProprietes.Taille.includes(newSize)) {
+            setProductProprietes(prev => {
+                const newProductProps = { ...prev };
+                if (!Array.isArray(newProductProps.Taille)) {
+                    newProductProps.Taille = [];
+                }
+                newProductProps.Taille.push(newSize.trim());
+                return newProductProps;
+            });
+            setNewSize('');
+        }
     }
 
     const proprietesToFill = [];
@@ -140,6 +169,39 @@ export default function ProduitForm({
                     </select>
                 </div>
             ))}
+
+            <div className="form-group-strict">
+                <label>Tailles</label>
+                <div className="mt-2 flex flex-wrap gap-2">
+                    {Array.isArray(productProprietes.Taille) && productProprietes.Taille.map((size, index) => (
+                        <div key={index} className="bg-gray-200 rounded p-2 border border-gray-300 flex items-center gap-2">
+                            <span>{size}</span>
+                            <button
+                                type="button"
+                                onClick={() => removeSize(index)}
+                                className="bg-red-500 text-white rounded px-2 py-1"
+                            >
+                                Supprimer
+                            </button>
+                        </div>
+                    ))}
+                </div>
+                <div className="mt-4">
+                    <input
+                        type="text"
+                        placeholder="Nouvelle taille"
+                        value={newSize}
+                        onChange={e => setNewSize(e.target.value)}
+                    />
+                    <button
+                        type="button"
+                        onClick={addSize}
+                        className="ml-2 bg-blue-500 text-white rounded px-4 py-2"
+                    >
+                        Ajouter
+                    </button>
+                </div>
+            </div>
 
             <div className="form-group-strict">
                 <label>Photo</label>
